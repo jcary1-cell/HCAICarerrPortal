@@ -1,0 +1,1361 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>HCAI Career Portal</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a search console. Sticky mono tab bar, left-aligned editorial headers, tools as two-pane workbenches (inputs left, live output right). */
+:root{
+  --paper:#EEF2EF; --surface:#FBFCFB; --sunk:#E3E9E5; --ink:#0F1F1A; --ink-2:#4B5C55; --ink-3:#73847D; --line:#CFD9D3;
+  --accent:#0B6A51; --accent-ink:#F4FBF8; --accent-soft:#D6ECE3;
+  --brass:#946A0C; --brass-soft:#F5E9C8; --danger:#B03E2A; --danger-soft:#F8DED7;
+  --f-display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Atkinson Hyperlegible Next", "Atkinson Hyperlegible", "Helvetica Neue", Arial, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --r:10px; --r-sm:6px;
+  --shadow:0 1px 0 rgba(15,31,26,.04), 0 8px 24px -14px rgba(15,31,26,.25);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --paper:#0B1411; --surface:#121E1A; --sunk:#0F1916; --ink:#E3ECE7; --ink-2:#A1B2AB; --ink-3:#7C8E87; --line:#24352F;
+  --accent:#56C9A2; --accent-ink:#05231A; --accent-soft:#153A2E;
+  --brass:#E3BA52; --brass-soft:#3A2F13; --danger:#F08C75; --danger-soft:#3D1D16;
+  --shadow:0 1px 0 rgba(0,0,0,.2), 0 10px 28px -16px rgba(0,0,0,.7);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --paper:#0B1411; --surface:#121E1A; --sunk:#0F1916; --ink:#E3ECE7; --ink-2:#A1B2AB; --ink-3:#7C8E87; --line:#24352F;
+  --accent:#56C9A2; --accent-ink:#05231A; --accent-soft:#153A2E;
+  --brass:#E3BA52; --brass-soft:#3A2F13; --danger:#F08C75; --danger-soft:#3D1D16;
+  --shadow:0 1px 0 rgba(0,0,0,.2), 0 10px 28px -16px rgba(0,0,0,.7);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--paper)}
+a{color:var(--accent);text-underline-offset:3px}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.08;letter-spacing:-.015em}
+p{margin:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.mono{font-family:var(--f-mono)}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.muted{color:var(--ink-2)}
+.small{font-size:14px}
+
+/* ---------- header / nav ---------- */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:20px;min-height:60px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);flex:none}
+.brand-mark{width:30px;height:30px;border-radius:8px;background:var(--ink);display:grid;place-items:center}
+.brand-mark svg{display:block}
+.brand b{font-family:var(--f-display);font-size:18px;font-weight:700;letter-spacing:-.02em}
+.brand span{font-family:var(--f-mono);font-size:11px;color:var(--ink-3);display:block;letter-spacing:.04em;margin-top:-2px}
+.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin-left:auto;min-width:0}
+.tabs::-webkit-scrollbar{display:none}
+.tabs a{font-family:var(--f-mono);font-size:13px;color:var(--ink-2);text-decoration:none;padding:8px 12px;border-radius:999px;white-space:nowrap;transition:background .15s,color .15s}
+.tabs a:hover{background:var(--sunk);color:var(--ink)}
+.tabs a[aria-current="page"]{background:var(--ink);color:var(--paper)}
+@media (max-width:760px){
+  .top .wrap{flex-direction:column;align-items:stretch;gap:6px;padding-block:10px 8px}
+  .tabs{margin-left:0;margin-right:-16px;padding-right:16px}
+}
+
+main{padding-block:0 80px}
+[hidden]{display:none!important}
+.view-head{padding-block:48px 28px;display:grid;gap:12px;max-width:760px}
+.view-head h1{font-size:clamp(34px,5vw,54px);font-weight:700}
+.view-head p{font-size:18px;color:var(--ink-2);max-width:62ch}
+
+/* ---------- buttons, chips, inputs ---------- */
+.btn{appearance:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:500 14px/1 var(--f-body);padding:10px 14px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;text-decoration:none;transition:background .15s,border-color .15s,transform .1s}
+.btn:hover{border-color:var(--ink-3)}
+.btn:active{transform:translateY(1px)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{filter:brightness(1.07)}
+.btn.ink{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.btn.ghost{background:transparent}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.btn svg{flex:none}
+.chip{font-family:var(--f-mono);font-size:12.5px;padding:5px 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);cursor:pointer;white-space:nowrap;transition:all .15s}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.kw{font-family:var(--f-mono);font-size:12px;padding:3px 8px;border-radius:5px;background:var(--sunk);color:var(--ink-2);border:0;cursor:copy}
+.kw:hover{background:var(--accent-soft);color:var(--accent)}
+.pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.02em;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.pill.open{background:var(--accent-soft);color:var(--accent)}
+.pill.deadline{background:var(--brass-soft);color:var(--brass)}
+.pill.urgent{background:var(--danger-soft);color:var(--danger)}
+.pill.watch{background:var(--sunk);color:var(--ink-2)}
+.pill.ongoing{background:var(--sunk);color:var(--ink-2)}
+label.fl{display:grid;gap:6px;font-size:13.5px;font-weight:500;color:var(--ink-2);min-width:0}
+input[type=text],input[type=email],input[type=url],input[type=tel],input[type=search],select,textarea{width:100%;font:16px/1.4 var(--f-body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);padding:10px 12px;transition:border-color .15s,box-shadow .15s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+textarea{resize:vertical;min-height:84px}
+.hint{font-weight:400;font-size:12.5px;color:var(--ink-3)}
+
+/* ---------- home ---------- */
+.hero{padding-block:56px 40px;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:48px;align-items:end}
+.hero h1{font-size:clamp(40px,6.4vw,78px);font-weight:750;letter-spacing:-.035em;line-height:.98}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero-lede{font-size:19px;color:var(--ink-2);max-width:52ch;margin-top:20px}
+.console{background:var(--ink);color:var(--paper);border-radius:14px;padding:20px;font-family:var(--f-mono);font-size:14px;box-shadow:var(--shadow);display:grid;gap:12px;min-width:0}
+.console .q{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.console .q s{opacity:.55;text-decoration-thickness:2px}
+.console .zero{color:var(--brass);font-size:12px}
+.console .sep{height:1px;background:color-mix(in srgb,var(--paper) 18%,transparent)}
+.console .hits{display:flex;flex-wrap:wrap;gap:6px}
+.console .hits button{font:inherit;font-size:12.5px;padding:5px 10px;border-radius:999px;border:1px solid color-mix(in srgb,var(--paper) 28%,transparent);background:transparent;color:var(--paper);cursor:pointer}
+.console .hits button:hover{background:var(--paper);color:var(--ink)}
+.console .lbl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:.6}
+.searchbar{display:flex;gap:8px;margin-top:28px;max-width:560px}
+.searchbar input{border-radius:999px;padding:13px 18px;font-size:16px}
+.searchbar .btn{padding:12px 18px}
+@media (max-width:900px){.hero{grid-template-columns:1fr;gap:32px;padding-top:36px}}
+
+.section{padding-block:36px}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.section-head h2{font-size:28px;font-weight:700}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.step{background:var(--surface);padding:22px;display:grid;gap:10px;align-content:start;text-decoration:none;color:var(--ink);transition:background .15s}
+.step:hover{background:var(--sunk)}
+.step .n{font-family:var(--f-mono);font-size:12px;color:var(--accent)}
+.step h3{font-size:20px;font-weight:650}
+.step p{font-size:14.5px;color:var(--ink-2)}
+.step .go{font-family:var(--f-mono);font-size:12.5px;color:var(--accent);margin-top:4px}
+@media (max-width:900px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+
+.timeline{display:grid;gap:0;border-top:1px solid var(--line)}
+.tl-row{display:grid;grid-template-columns:120px minmax(0,1fr) auto;gap:20px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.tl-date{font-family:var(--f-mono);font-size:13px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.tl-date b{display:block;font-family:var(--f-display);font-size:26px;color:var(--ink);font-weight:700;letter-spacing:-.02em;line-height:1}
+.tl-main h4{font-size:18px;font-weight:650}
+.tl-main p{font-size:14px;color:var(--ink-2)}
+@media (max-width:600px){.tl-row{grid-template-columns:76px minmax(0,1fr)}.tl-row .pill{grid-column:2;justify-self:start}}
+
+.quote-band{margin-top:12px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.qb{padding:18px 0;border-top:2px solid var(--ink);display:grid;gap:8px;align-content:start}
+.qb .n{font-family:var(--f-mono);font-size:12px;color:var(--ink-3)}
+.qb p{font-size:15px}
+@media (max-width:900px){.quote-band{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.quote-band{grid-template-columns:1fr}}
+
+/* ---------- find ---------- */
+.finder{display:grid;grid-template-columns:260px minmax(0,1fr);gap:32px;align-items:start}
+.filters{position:sticky;top:calc(env(safe-area-inset-top,0px) + 78px);display:grid;gap:22px}
+.fgroup{display:grid;gap:8px}
+.fgroup .eyebrow{margin-bottom:2px}
+.fchips{display:flex;flex-wrap:wrap;gap:6px}
+.results-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.results-bar .count{font-family:var(--f-mono);font-size:13px;color:var(--ink-2);margin-right:auto}
+.qwrap{position:relative;margin-bottom:14px}
+.qwrap svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--ink-3)}
+.qwrap input{padding-left:40px;border-radius:999px;font-size:16px;padding-block:12px}
+.cards{display:grid;gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;display:grid;gap:12px;min-width:0}
+.card-top{display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+.card h3{font-size:21px;font-weight:650;letter-spacing:-.01em}
+.card .org{font-size:14px;color:var(--ink-2);margin-top:3px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-family:var(--f-mono);font-size:12.5px;color:var(--ink-2)}
+.meta span{display:inline-flex;gap:5px;align-items:center}
+.card .fit{font-size:15px;max-width:72ch}
+.card .tip{font-size:14px;background:var(--brass-soft);color:var(--ink);padding:10px 12px;border-radius:var(--r-sm)}
+.card .tip b{color:var(--brass)}
+.kws{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.kws .eyebrow{font-size:11px;margin-right:4px}
+.card-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding-top:4px}
+.save{margin-left:auto}
+.save[data-s="saved"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.save[data-s="applying"]{background:var(--brass-soft);border-color:var(--brass);color:var(--brass)}
+.save[data-s="applied"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.empty{padding:40px;text-align:center;border:1px dashed var(--line);border-radius:var(--r);color:var(--ink-2)}
+.toggle-filters{display:none}
+@media (max-width:900px){
+  .finder{grid-template-columns:1fr}
+  .filters{position:static;display:none}
+  .filters.open{display:grid}
+  .toggle-filters{display:inline-flex}
+}
+
+/* ---------- workbench (letter, linkedin) ---------- */
+.bench{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:28px;align-items:start}
+.bench-in{display:grid;gap:22px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:grid;gap:14px;min-width:0}
+.panel h3{font-size:18px;font-weight:650}
+.panel-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:520px){.grid2{grid-template-columns:1fr}}
+.bench-out{position:sticky;top:calc(env(safe-area-inset-top,0px) + 78px);display:grid;gap:16px;min-width:0}
+@media (max-width:980px){.bench{grid-template-columns:1fr}.bench-out{position:static}}
+.paper{background:var(--surface);border:1px solid var(--line);border-radius:4px;box-shadow:var(--shadow);padding:clamp(22px,4vw,48px);font-size:15px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;max-height:78vh;overflow:auto}
+.paper mark{background:var(--brass-soft);color:var(--brass);border-radius:3px;padding:0 3px;font-family:var(--f-mono);font-size:13px}
+.paper b{font-weight:700}
+.outbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.outbar .spacer{margin-left:auto}
+.check{display:grid;gap:8px}
+.check li{list-style:none;display:flex;gap:10px;align-items:flex-start;font-size:14.5px}
+.check ul{padding:0;margin:0;display:grid;gap:8px}
+.tick{flex:none;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;margin-top:2px}
+.tick.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.notice{font-size:14px;padding:12px 14px;border-radius:var(--r-sm);background:var(--danger-soft);color:var(--ink)}
+.notice b{color:var(--danger)}
+.ai{border:1px solid var(--accent);border-radius:var(--r);background:linear-gradient(180deg,var(--accent-soft),transparent 140px),var(--surface);padding:18px;display:grid;gap:12px}
+.ai-head{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.ai-head h3{font-size:17px;font-weight:650;display:flex;gap:8px;align-items:center}
+.ai textarea{min-height:240px;font-size:15px;line-height:1.6;background:var(--surface)}
+.ai .status{font-family:var(--f-mono);font-size:12.5px;color:var(--ink-2)}
+.ai-off{font-size:13.5px;color:var(--ink-3)}
+.dot-pulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pulse 1.2s infinite}
+@keyframes pulse{50%{opacity:.25}}
+.out-block{display:grid;gap:10px}
+.out-block h4{font-size:15px;font-family:var(--f-mono);font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3)}
+.opt{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;padding:12px 14px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface)}
+.opt p{font-size:15px;min-width:0;overflow-wrap:anywhere}
+.opt .cc{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-3);white-space:nowrap}
+.opt .cc.over{color:var(--danger)}
+.iconbtn{appearance:none;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);border-radius:var(--r-sm);padding:6px 9px;cursor:pointer;font:500 12px var(--f-mono);flex:none}
+.iconbtn:hover{color:var(--accent);border-color:var(--accent)}
+.skilltags{display:flex;flex-wrap:wrap;gap:6px}
+.skilltags span{font-size:13.5px;padding:5px 10px;border-radius:999px;background:var(--sunk)}
+
+/* ---------- pathways ---------- */
+.pw{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:28px;align-items:start}
+@media (max-width:980px){.pw{grid-template-columns:1fr}}
+.course-list{display:grid;gap:6px}
+.course{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface);cursor:pointer;text-align:left;font:inherit;color:inherit;transition:border-color .15s,background .15s}
+.course:hover{border-color:var(--ink-3)}
+.course[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.course .code{font-family:var(--f-mono);font-size:12.5px;color:var(--accent);min-width:82px;padding-top:2px}
+.course .t{font-size:14.5px;font-weight:500}
+.course .s{font-size:12.5px;color:var(--ink-3)}
+.course .box{flex:none;width:18px;height:18px;border-radius:4px;border:1.5px solid var(--line);margin-left:auto;margin-top:2px;display:grid;place-items:center;color:var(--accent-ink)}
+.course[aria-pressed="true"] .box{background:var(--accent);border-color:var(--accent)}
+.goals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+@media (max-width:620px){.goals{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.goal{appearance:none;font:inherit;color:inherit;text-align:left;padding:14px;border-radius:var(--r-sm);border:1px solid var(--line);background:var(--surface);cursor:pointer;display:grid;gap:4px;align-content:start}
+.goal b{font-family:var(--f-display);font-size:16px;font-weight:650;line-height:1.15}
+.goal span{font-size:12.5px;color:var(--ink-3)}
+.goal[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.goal[aria-pressed="true"] span{color:color-mix(in srgb,var(--paper) 70%,transparent)}
+.meter{display:flex;gap:4px}
+.meter i{flex:1;height:10px;border-radius:3px;background:var(--sunk)}
+.meter i.on{background:var(--accent)}
+.meter i.half{background:repeating-linear-gradient(135deg,var(--brass) 0 4px,var(--brass-soft) 4px 8px)}
+.skillrow{display:grid;grid-template-columns:22px minmax(0,1fr);gap:12px;padding:14px 0;border-top:1px solid var(--line)}
+.skillrow:first-child{border-top:0}
+.skillrow .st{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;margin-top:1px}
+.skillrow .st.have{background:var(--accent);color:var(--accent-ink)}
+.skillrow .st.gap{border:1.5px dashed var(--brass);color:var(--brass)}
+.skillrow h4{font-family:var(--f-body);font-size:15.5px;font-weight:700;letter-spacing:0}
+.skillrow .via{font-family:var(--f-mono);font-size:12px;color:var(--accent)}
+.skillrow .say{font-size:14px;color:var(--ink-2);margin-top:4px}
+.skillrow .build{font-size:14px;margin-top:4px}
+.skillrow .build b{color:var(--brass)}
+.mini-opps{display:grid;gap:6px}
+.mini-opps a{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:var(--r-sm);background:var(--sunk);text-decoration:none;color:var(--ink);font-size:14.5px}
+.mini-opps a:hover{background:var(--accent-soft)}
+.mini-opps a span{font-family:var(--f-mono);font-size:12px;color:var(--ink-3);white-space:nowrap}
+.outcomes{display:grid;gap:10px;counter-reset:o}
+.outcomes li{list-style:none;display:grid;grid-template-columns:28px minmax(0,1fr);gap:8px;font-size:14.5px}
+.outcomes li::before{counter-increment:o;content:counter(o);font-family:var(--f-mono);font-size:12px;color:var(--accent);padding-top:2px}
+.outcomes ul{padding:0;margin:0;display:grid;gap:10px}
+.outcomes em{display:block;font-style:normal;color:var(--ink-2);font-size:13.5px;margin-top:2px}
+
+/* ---------- resources ---------- */
+.res-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:900px){.res-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.res-grid{grid-template-columns:1fr}}
+.res{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:grid;gap:8px;align-content:start;text-decoration:none;color:var(--ink);transition:border-color .15s}
+a.res:hover{border-color:var(--accent)}
+.res h4{font-size:18px;font-weight:650}
+.res .host{font-family:var(--f-mono);font-size:12px;color:var(--accent)}
+.res p{font-size:14.5px;color:var(--ink-2)}
+.kwboard{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.kwboard button{appearance:none;text-align:left;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);padding:12px 14px;cursor:pointer;display:grid;gap:2px}
+.kwboard button:hover{border-color:var(--accent)}
+.kwboard b{font-family:var(--f-mono);font-weight:500;font-size:14px}
+.kwboard span{font-size:12.5px;color:var(--ink-3)}
+.contact{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:14.5px}
+.contact code{font-family:var(--f-mono);font-size:13px;background:var(--sunk);padding:3px 8px;border-radius:5px;user-select:all}
+.read-tips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:700px){.read-tips{grid-template-columns:1fr}}
+.read-tips .res ul{margin:0;padding-left:18px;font-size:14.5px;color:var(--ink-2);display:grid;gap:4px}
+
+footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13.5px;color:var(--ink-3)}
+footer .wrap{display:grid;gap:6px}
+
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--paper);font:500 14px var(--f-body);padding:10px 16px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:50;max-width:calc(100vw - 32px)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#home" aria-label="HCAI Career Portal home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="6" cy="6" r="3" fill="var(--paper)"/><rect x="10" y="10" width="6" height="6" rx="1.2" fill="var(--accent)"/><path d="M7.8 7.8 10.6 10.6" stroke="var(--paper)" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </span>
+      <div><b>HCAI Career Portal</b><span>Human-Centered AI · UNC Charlotte</span></div>
+    </a>
+    <nav class="tabs" aria-label="Sections">
+      <a href="#home" data-v="home">Start</a>
+      <a href="#find" data-v="find">Find roles</a>
+      <a href="#letter" data-v="letter">Cover letter</a>
+      <a href="#linkedin" data-v="linkedin">LinkedIn</a>
+      <a href="#pathways" data-v="pathways">Skills → careers</a>
+      <a href="#resources" data-v="resources">Resources</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- ================= HOME ================= -->
+<section class="view" id="v-home">
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <p class="eyebrow">Internships · careers · Summer 2027 recruiting is open</p>
+        <h1 style="margin-top:14px">AI needs a human touch. <em>So do the jobs.</em></h1>
+        <p class="hero-lede">Almost no posting is titled "Human-Centered AI Intern." This portal shows you the words employers actually use, who's hiring HCAI students right now, and how to talk about what you're learning.</p>
+        <form class="searchbar" id="heroSearch">
+          <input type="search" id="heroQ" placeholder="Try “AI governance” or “UX research”" aria-label="Search opportunities">
+          <button class="btn primary" type="submit">Search</button>
+        </form>
+      </div>
+      <div class="console" aria-label="Why search keywords matter">
+        <div class="lbl">search</div>
+        <div class="q"><span>›</span><s>"Human-Centered AI Intern"</s></div>
+        <div class="zero">≈ 0 results. Try what employers call it:</div>
+        <div class="sep"></div>
+        <div class="hits" id="heroKeywords"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap section">
+    <div class="section-head">
+      <div><p class="eyebrow">How to use this portal</p><h2>Four moves, in order</h2></div>
+    </div>
+    <div class="steps">
+      <a class="step" href="#resources"><span class="n">Step 1</span><h3>Learn the keywords</h3><p>Responsible AI, AI governance, model risk, data ethics, UX research, trust and safety.</p><span class="go">Keyword board →</span></a>
+      <a class="step" href="#find"><span class="n">Step 2</span><h3>Apply where they're hiring</h3><p>Wells Fargo, Bank of America, Duke Energy and Moody's are recruiting for Summer 2027 now.</p><span class="go">Find roles →</span></a>
+      <a class="step" href="#find" data-filter="remote"><span class="n">Step 3</span><h3>Widen the search</h3><p>Job boards for AI policy and social impact, plus remote RLHF work that builds your resume.</p><span class="go">Boards & remote →</span></a>
+      <a class="step" href="#letter"><span class="n">Step 4</span><h3>Write the letter</h3><p>Start from the HCAI cover letter template and tailor it to the role's flavor.</p><span class="go">Cover letter studio →</span></a>
+    </div>
+  </div>
+
+  <div class="wrap section">
+    <div class="section-head">
+      <div><p class="eyebrow">Coming up</p><h2>Deadlines and application windows</h2></div>
+      <a class="btn" href="#find">See every opportunity</a>
+    </div>
+    <div class="timeline" id="timeline"></div>
+  </div>
+
+  <div class="wrap section">
+    <div class="section-head">
+      <div><p class="eyebrow">What employers are hiring for</p><h2>What you bring that others don't</h2></div>
+      <a class="btn" href="#pathways">Map your skills</a>
+    </div>
+    <div class="quote-band">
+      <div class="qb"><span class="n">Ethical judgment</span><p>Auditing AI outputs, spotting bias, and checking systems against policy. The core of governance and risk roles.</p></div>
+      <div class="qb"><span class="n">Research & synthesis</span><p>Qualitative methods from IDST 3100 turn into policy research, user research, and RLHF evaluation.</p></div>
+      <div class="qb"><span class="n">Clear writing</span><p>Storytelling and rhetoric make AI understandable. Copywriting and content roles ask for exactly this.</p></div>
+      <div class="qb"><span class="n">Translation</span><p>Explaining AI to non-technical people, and people to technical teams. Most roles on this site need no coding.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FIND ================= -->
+<section class="view" id="v-find" hidden>
+  <div class="wrap">
+    <div class="view-head">
+      <p class="eyebrow">Opportunity finder</p>
+      <h1>Find roles that fit an HCAI student</h1>
+      <p>Internships, fellowships, remote work, job boards and campus programs from the HCAI Internship Resource Guide. Save the ones you like and track where you've applied. Your list stays on this device.</p>
+    </div>
+    <div class="finder">
+      <aside class="filters" id="filters" aria-label="Filters">
+        <div class="fgroup"><span class="eyebrow">Career path</span><div class="fchips" id="fPath"></div></div>
+        <div class="fgroup"><span class="eyebrow">Type</span><div class="fchips" id="fType"></div></div>
+        <div class="fgroup"><span class="eyebrow">Narrow it</span><div class="fchips" id="fMore"></div></div>
+        <div class="fgroup"><span class="eyebrow">My list</span><div class="fchips" id="fMine"></div></div>
+        <button class="btn ghost small" id="clearFilters" type="button">Clear filters</button>
+      </aside>
+      <div style="min-width:0">
+        <div class="qwrap">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <input type="search" id="q" placeholder="Search by employer, keyword, city or skill" aria-label="Search opportunities">
+        </div>
+        <div class="results-bar">
+          <span class="count" id="count"></span>
+          <button class="btn small toggle-filters" id="toggleFilters" type="button">Filters</button>
+          <label class="small muted" for="sort" style="display:flex;gap:8px;align-items:center">Sort
+            <select id="sort" style="width:auto;padding:7px 10px;font-size:14px">
+              <option value="deadline">Soonest deadline</option>
+              <option value="az">A to Z</option>
+              <option value="pay">Paid first</option>
+            </select>
+          </label>
+        </div>
+        <div class="cards" id="cards"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LETTER ================= -->
+<section class="view" id="v-letter" hidden>
+  <div class="wrap">
+    <div class="view-head">
+      <p class="eyebrow">Cover letter studio</p>
+      <h1>Draft your letter from the HCAI template</h1>
+      <p>Fill in the details and the letter writes itself on the right. Pick the role's flavor to swap in the right competency, then make it sound like you.</p>
+    </div>
+    <div class="bench">
+      <div class="bench-in">
+        <div class="panel">
+          <div class="panel-head"><h3>The role</h3><span class="hint">Start from a listing, or type your own</span></div>
+          <label class="fl" for="lOpp">Start from an opportunity
+            <select id="lOpp"><option value="">Choose one (optional)</option></select>
+          </label>
+          <div class="grid2">
+            <label class="fl" for="lTitle">Exact job title <span class="hint">Copy it from the posting</span><input type="text" id="lTitle" autocomplete="off"></label>
+            <label class="fl" for="lCompany">Company<input type="text" id="lCompany" autocomplete="organization"></label>
+          </div>
+          <div class="grid2">
+            <label class="fl" for="lManager">Hiring manager <span class="hint">Blank = "Hiring Team"</span><input type="text" id="lManager"></label>
+            <label class="fl" for="lAddress">Company address<input type="text" id="lAddress" placeholder="Or “Remote”"></label>
+          </div>
+          <label class="fl" for="lTeam">Team or department<input type="text" id="lTeam" placeholder="e.g. AI Governance, Technology Risk"></label>
+          <label class="fl" for="lFlavor">Role flavor
+            <select id="lFlavor">
+              <option value="general">General HCAI (template default)</option>
+              <option value="risk">Risk, governance or compliance</option>
+              <option value="rlhf">Data analytics or AI training / RLHF</option>
+              <option value="ux">UX/UI or product management</option>
+            </select>
+          </label>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Make it specific</h3><span class="hint">This is what makes it yours</span></div>
+          <label class="fl" for="lInitiative">A company initiative, value or project you admire
+            <textarea id="lInitiative" rows="2" placeholder="e.g. its Responsible AI principles, or its new data governance program"></textarea>
+          </label>
+          <label class="fl" for="lIndustry">What excites you about their work
+            <textarea id="lIndustry" rows="2" placeholder="e.g. navigating data governance in the financial sector"></textarea>
+          </label>
+          <label class="fl" for="lStory">One true story from class, work or a project <span class="hint">Used when Claude polishes your draft</span>
+            <textarea id="lStory" rows="3" placeholder="e.g. In HCAI 2101 I audited a chatbot's answers about financial aid and found it gave confident wrong deadlines..."></textarea>
+          </label>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Your details</h3><span class="hint">Saved on this device, shared with the LinkedIn builder</span></div>
+          <div class="grid2">
+            <label class="fl" for="pName">Name<input type="text" id="pName" autocomplete="name"></label>
+            <label class="fl" for="pPhone">Phone<input type="tel" id="pPhone" autocomplete="tel"></label>
+          </div>
+          <div class="grid2">
+            <label class="fl" for="pEmail">Email<input type="email" id="pEmail" autocomplete="email"></label>
+            <label class="fl" for="pCity">City, State Zip<input type="text" id="pCity" placeholder="Charlotte, NC 28223"></label>
+          </div>
+          <label class="fl" for="pLinkedin">LinkedIn, portfolio or GitHub URL<input type="url" id="pLinkedin" placeholder="linkedin.com/in/yourname"></label>
+        </div>
+      </div>
+
+      <div class="bench-out">
+        <div class="outbar">
+          <span class="eyebrow">Live draft</span>
+          <span class="spacer"></span>
+          <button class="btn" id="copyLetter" type="button">Copy letter</button>
+        </div>
+        <div id="fpfWarn" class="notice" hidden><b>Heads up:</b> Future of Privacy Forum asks applicants not to use AI in their application. Use this template only as a checklist and write the letter yourself.</div>
+        <article class="paper" id="letterOut" aria-live="polite"></article>
+        <div class="panel check">
+          <h3>Before you send</h3>
+          <ul id="letterChecks"></ul>
+        </div>
+        <div class="ai" id="letterAI">
+          <div class="ai-head">
+            <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2v6M12 16v6M2 12h6M16 12h6M5 5l3.5 3.5M15.5 15.5 19 19M5 19l3.5-3.5M15.5 8.5 19 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Polish with Claude</h3>
+            <div class="outbar">
+              <button class="btn primary" id="letterAIgo" type="button">Rewrite in my voice</button>
+              <button class="btn" id="letterAIcopy" type="button" hidden>Copy</button>
+            </div>
+          </div>
+          <p class="small muted">Merges the three competency bullets into one paragraph for this role, works in your story, and keeps anything you haven't filled in as [brackets]. It won't invent experience. Edit freely below.</p>
+          <p class="status" id="letterAIstatus" hidden></p>
+          <textarea id="letterAIout" aria-label="Claude's draft" hidden></textarea>
+          <p class="ai-off" id="letterAIoff" hidden>Claude polish works when this page is opened in Claude. The template on the left still works anywhere.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LINKEDIN ================= -->
+<section class="view" id="v-linkedin" hidden>
+  <div class="wrap">
+    <div class="view-head">
+      <p class="eyebrow">LinkedIn builder</p>
+      <h1>Say what HCAI is in 220 characters</h1>
+      <p>Recruiters search LinkedIn with the same keywords as job boards. Build a headline, About section, skills and education entry that use them, grounded in the courses you've actually taken.</p>
+    </div>
+    <div class="bench">
+      <div class="bench-in">
+        <div class="panel">
+          <h3>About you</h3>
+          <div class="grid2">
+            <label class="fl" for="liYear">Expected graduation<select id="liYear"></select></label>
+            <label class="fl" for="liProgram">In HCAI as a
+              <select id="liProgram"><option value="major">Major (IDST B.A., HCAI concentration)</option><option value="minor">Minor (AI Fundamentals)</option></select>
+            </label>
+          </div>
+          <label class="fl" for="liField">Disciplinary field or other major <span class="hint">e.g. English, Philosophy, Psychology, Communication</span><input type="text" id="liField"></label>
+          <label class="fl" for="liPath">Career direction<select id="liPath"></select></label>
+          <label class="fl" for="liProject">One project or experience you're proud of
+            <textarea id="liProject" rows="3" placeholder="e.g. Evaluated AI chatbot answers for bias as part of a class audit; wrote a policy brief on the EU AI Act"></textarea>
+          </label>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Courses you've taken</h3><a class="small" href="#pathways">Edit on the skills map</a></div>
+          <div class="skilltags" id="liCourses"></div>
+        </div>
+      </div>
+      <div class="bench-out">
+        <div class="out-block"><h4>Headline options</h4><div id="liHeadlines" style="display:grid;gap:8px"></div></div>
+        <div class="out-block">
+          <div class="outbar"><h4>About section</h4><span class="spacer"></span><button class="iconbtn" id="copyAbout" type="button">Copy</button></div>
+          <div class="paper" id="liAbout" style="max-height:none;font-size:15px"></div>
+        </div>
+        <div class="out-block">
+          <div class="outbar"><h4>Skills to add</h4><span class="spacer"></span><button class="iconbtn" id="copySkills" type="button">Copy list</button></div>
+          <div class="skilltags" id="liSkills"></div>
+        </div>
+        <div class="out-block">
+          <div class="outbar"><h4>Education entry</h4><span class="spacer"></span><button class="iconbtn" id="copyEdu" type="button">Copy</button></div>
+          <div class="paper" id="liEdu" style="max-height:none;font-size:14.5px;padding:20px"></div>
+        </div>
+        <div class="out-block"><h4>Featured section ideas</h4><ul id="liFeatured" class="small" style="margin:0;padding-left:18px;display:grid;gap:6px;color:var(--ink-2)"></ul></div>
+        <div class="ai" id="liAI">
+          <div class="ai-head">
+            <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2v6M12 16v6M2 12h6M16 12h6M5 5l3.5 3.5M15.5 15.5 19 19M5 19l3.5-3.5M15.5 8.5 19 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Polish with Claude</h3>
+            <div class="outbar">
+              <button class="btn primary" id="liAIgo" type="button">Write it in my voice</button>
+              <button class="btn" id="liAIcopy" type="button" hidden>Copy</button>
+            </div>
+          </div>
+          <p class="small muted">Writes a headline and About section from your details and your project, in first person and plain language.</p>
+          <p class="status" id="liAIstatus" hidden></p>
+          <textarea id="liAIout" aria-label="Claude's LinkedIn draft" hidden></textarea>
+          <p class="ai-off" id="liAIoff" hidden>Claude polish works when this page is opened in Claude. The templates above still work anywhere.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PATHWAYS ================= -->
+<section class="view" id="v-pathways" hidden>
+  <div class="wrap">
+    <div class="view-head">
+      <p class="eyebrow">Skills → careers</p>
+      <h1>Connect your coursework to where you want to go</h1>
+      <p>Tick the HCAI courses you've taken or are taking, then pick a direction. You'll see which skills you're already building, how to say them on a resume, what to add next, and who's hiring for it.</p>
+    </div>
+    <div class="pw">
+      <div style="display:grid;gap:22px;min-width:0">
+        <div class="panel">
+          <div class="panel-head"><h3>Major courses</h3><span class="hint">IDST B.A., HCAI concentration</span></div>
+          <div class="course-list" id="coursesMajor"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Minor core & electives</h3><span class="hint">Minor in AI Fundamentals</span></div>
+          <div class="course-list" id="coursesMinor"></div>
+        </div>
+      </div>
+      <div style="display:grid;gap:22px;min-width:0">
+        <div class="panel">
+          <h3>Where do you want to land?</h3>
+          <div class="goals" id="goals"></div>
+        </div>
+        <div class="panel" id="pwResult"></div>
+        <div class="ai" id="pwAI">
+          <div class="ai-head">
+            <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2v6M12 16v6M2 12h6M16 12h6M5 5l3.5 3.5M15.5 15.5 19 19M5 19l3.5-3.5M15.5 8.5 19 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Plan it with Claude</h3>
+            <button class="btn primary" id="pwAIgo" type="button">Build my plan</button>
+          </div>
+          <label class="fl" for="pwGoal">Your post-graduation goal, in your words
+            <textarea id="pwGoal" rows="2" placeholder="e.g. I want to work on AI policy at a nonprofit in DC within two years of graduating"></textarea>
+          </label>
+          <p class="status" id="pwAIstatus" hidden></p>
+          <textarea id="pwAIout" aria-label="Claude's plan" hidden></textarea>
+          <p class="ai-off" id="pwAIoff" hidden>Claude planning works when this page is opened in Claude. The map above works anywhere.</p>
+        </div>
+        <div class="panel">
+          <h3>Program outcomes you can cite</h3>
+          <p class="small muted">The HCAI program's four learning outcomes, with a way to say each one in an interview.</p>
+          <div class="outcomes"><ul id="outcomes"></ul></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESOURCES ================= -->
+<section class="view" id="v-resources" hidden>
+  <div class="wrap">
+    <div class="view-head">
+      <p class="eyebrow">Resources</p>
+      <h1>Keywords, boards, and people who can help</h1>
+      <p>Everything outside the opportunity list: the search terms that surface HCAI roles, job boards for responsible tech, campus career help, and the HCAI program itself.</p>
+    </div>
+
+    <div class="section" style="padding-top:0">
+      <div class="section-head"><div><p class="eyebrow">Step 1</p><h2>Keyword board</h2></div><p class="small muted">Click a keyword to search the opportunity list with it.</p></div>
+      <div class="kwboard" id="kwboard"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><div><p class="eyebrow">Read like a recruiter</p><h2>How to read a posting</h2></div></div>
+      <div class="read-tips">
+        <div class="res"><h4>Green lights</h4><ul><li>"All majors" or "no specific major required"</li><li>"Strong writing skills"</li><li>"Policy, ethics, or law"</li><li>Research, synthesis, communication, stakeholder work</li></ul></div>
+        <div class="res"><h4>Skip unless you have it</h4><ul><li>Python or statistics required</li><li>A design portfolio required</li><li>"Past posting" doesn't mean closed for good. These usually repeat each year, so set a reminder.</li></ul></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><div><p class="eyebrow">Beyond Charlotte</p><h2>Job boards and remote resume builders</h2></div></div>
+      <div class="res-grid" id="boards"></div>
+      <p class="small muted" style="margin-top:14px;max-width:70ch"><b style="color:var(--ink)">Why RLHF work counts:</b> DataAnnotation.tech and iMerit pay you to evaluate and improve AI outputs. That's applied HCAI work you can point to when you apply for internships.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><div><p class="eyebrow">On campus</p><h2>UNC Charlotte career help</h2></div></div>
+      <div class="res-grid" id="campus"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><div><p class="eyebrow">The program</p><h2>Human-Centered AI at Charlotte</h2></div></div>
+      <div class="res-grid" id="program"></div>
+      <div class="panel" style="margin-top:12px">
+        <h3>Questions about the program or your capstone?</h3>
+        <p class="small muted">HCAI 4600, the capstone, can be an internship, service learning, a community-based project, or an interdisciplinary project. Ask the program director how an internship could count.</p>
+        <div class="contact"><span><b>Justin Cary</b>, Program Director</span><code id="dirEmail">jcary1@charlotte.edu</code><button class="iconbtn" data-copy="jcary1@charlotte.edu" type="button">Copy email</button></div>
+        <div class="contact"><span>Interdisciplinary Studies office</span><code>704-687-8622</code><button class="iconbtn" data-copy="704-687-8622" type="button">Copy phone</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Built from the HCAI Internship Resource Guide (researched November 12, 2026) and the Human-Centered AI program page. Postings change often, so confirm details on each employer's site before you apply.</p>
+    <p>Saved roles, your details and drafts stay in this browser only. Nothing you type here is shared unless you use a Claude button, which sends that draft to Claude on your own account.</p>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+"use strict";
+
+/* ===================== DATA ===================== */
+const TODAY = new Date();
+const PATHS = {
+  policy:{label:"AI policy & ethics research", short:"Policy & ethics", blurb:"Think tanks, nonprofits, fellowships",
+    role:"AI Policy Researcher", headline:"AI policy, ethics & governance research",
+    skills:["policy","research","writing","ethics","sociotech"],
+    keywords:["AI policy intern","tech policy","AI governance intern","public interest technology","Data Ethics"]},
+  corp:{label:"AI governance & risk in companies", short:"Governance & risk", blurb:"Banks, insurers, enterprise tech",
+    role:"AI Governance Analyst", headline:"Responsible AI, AI governance & model risk",
+    skills:["ethics","policy","literacy","prompting","pm"],
+    keywords:["Responsible AI","AI Governance","Model Risk","Risk Analyst","Global Risk Summer Analyst"]},
+  comms:{label:"Communication & storytelling", short:"Communication", blurb:"Copywriting, AI content, brand strategy",
+    role:"AI Content Strategist", headline:"Explaining AI through writing & storytelling",
+    skills:["writing","translate","literacy","research"],
+    keywords:["AI communications","content policy","copywriter intern","AI literacy"]},
+  ux:{label:"UX research & product", short:"UX & product", blurb:"Human-computer interaction, design teams",
+    role:"UX Researcher", headline:"UX research & human-computer interaction for AI products",
+    skills:["userresearch","research","translate","ethics"],
+    keywords:["UX Research","Human-Computer Interaction","UX Design Intern","Product"]},
+  data:{label:"AI training, data & RLHF", short:"AI training & data", blurb:"Evaluating and improving AI outputs",
+    role:"AI Evaluation Specialist", headline:"AI evaluation, RLHF & data quality",
+    skills:["prompting","literacy","research","writing","ml"],
+    keywords:["Data Operations","Data Analytics","RLHF","Domain Expert","Data Management"]},
+  public:{label:"Public sector & civic tech", short:"Public sector", blurb:"Government AI strategy and service",
+    role:"Public Interest Technologist", headline:"Public interest technology & responsible government AI",
+    skills:["policy","translate","literacy","pm","ethics"],
+    keywords:["public interest technology","AI policy intern","Trust and Safety","Future Technologist"]}
+};
+
+const TYPES = {internship:"Internship", fellowship:"Fellowship / program", remote:"Remote contract work", board:"Job board", campus:"Campus program"};
+
+// status: open | deadline | watch | ongoing ; date = hard deadline, expected = approximate
+const OPPS = [
+ {id:"wells",name:"Technology Summer Internships",org:"Wells Fargo · Early Careers & University Programs",type:"internship",paths:["corp","data"],loc:"Charlotte, NC",nc:true,
+  status:"open",statusText:"Recruiting now for Summer 2027",fit:"2027 Technology Summer Internships in Charlotte, including Data Engineering and Cybersecurity tracks.",
+  kw:["Technology Summer Internship","Data","Risk"],url:"https://www.wellsfargojobs.com/en/early-careers",flavor:"risk",title:"Technology Summer Intern"},
+ {id:"boa",name:"Summer Analyst Programs",org:"Bank of America · Campus Experience & Student Programs",type:"internship",paths:["corp","data"],loc:"Charlotte, NC",nc:true,
+  status:"open",statusText:"Recruiting now for Summer 2027",fit:"10-week 2027 Summer Analyst roles in Charlotte.",
+  kw:["Technology Analyst","Global Risk Summer Analyst","Data Management"],url:"https://careers.bankofamerica.com/en-us/students",flavor:"risk",title:"Global Risk Summer Analyst"},
+ {id:"duke",name:"UX Design & IT Summer Internships",org:"Duke Energy · Students & Recent Grads",type:"internship",paths:["ux","data"],loc:"Charlotte, NC",nc:true,
+  status:"open",statusText:"Recruiting now for Summer 2027",fit:"Summer 2027 internships in Charlotte, including the \"UX Design Internship - Summer 2027\" and \"IT Summer Intern\" roles.",
+  tip:"Open the Student Interns section or search \"Summer 2027\" in the main search bar. The IT Summer Intern role explicitly includes exposure to AI, data analytics and software engineering.",
+  kw:["UX Design Intern","IT Summer Intern","Data Analytics"],url:"https://dukeenergy.wd1.myworkdayjobs.com/en-US/Search",flavor:"ux",title:"UX Design Internship - Summer 2027"},
+ {id:"moodys",name:"Solutions Graduate Program & Summer Analysts",org:"Moody's Analytics · Early Careers",type:"internship",paths:["data","corp"],loc:"See posting",
+  status:"open",statusText:"Applications open",fit:"Solutions Graduate Program and summer analyst applications.",
+  kw:["Data Operations","Ratings Associate","Early Careers"],url:"https://careers.moodys.com/en/early-careers",flavor:"rlhf",title:"Summer Analyst"},
+ {id:"govai",name:"DC Summer Fellowship 2027",org:"GovAI (Centre for the Governance of AI)",type:"fellowship",paths:["policy"],loc:"Washington, DC · Jun 7–Aug 27, 2027",
+  status:"deadline",date:"2026-11-22",statusText:"Apply by Nov 22, 2026",fit:"A three-month AI governance and policy fellowship that welcomes candidates from a wide range of backgrounds, including communications and operations.",
+  tip:"Very competitive, and undergraduate eligibility isn't stated, so it's best for strong seniors.",
+  kw:["AI governance","AI policy"],url:"https://www.governance.ai/opportunities/dc-summer-fellowship-2027",title:"DC Summer Fellow"},
+ {id:"flips",name:"Future Leaders in Public Service",org:"Partnership for Public Service · Public Interest Technology & AI track",type:"internship",paths:["public","policy"],loc:"Government agencies",paid:true,
+  status:"deadline",date:"2026-11-27",statusText:"Apply by Nov 27, 2026",fit:"Paid 10–12 week government internships for all majors. The Public Interest Technology & AI track can include AI policy, writing and editing, and program management.",
+  elig:"U.S. citizens, 2.5+ GPA",kw:["public interest technology","AI policy"],url:"https://gogovernment.org/future-leaders-in-public-service/",
+  extra:[["Summer 2027 AI placements (PDF)","https://gogovernment.org/wp-content/uploads/2026/07/Future-Leaders-Agency-One-Pager-AI-Summer-2027.pdf"]],title:"Future Leaders in Public Service Intern"},
+ {id:"brookings",name:"AI and Emerging Technology Internships",org:"Brookings Institution",type:"internship",paths:["policy"],loc:"Washington, DC (hybrid)",paid:true,pay:"$18.40/hr",
+  status:"deadline",date:"2027-01-18",approx:true,statusText:"Summer 2027 roles expected around Jan 18, 2027",fit:"Paid research and events roles on AI governance and the future of work, for juniors and seniors.",
+  kw:["AI governance","future of work","research assistant AI"],url:"https://interns-brookings.icims.com",
+  extra:[["Brookings internship guide","https://www.extern.com/post/brookings-institution-internship-guide"]],title:"Research Intern, AI and Emerging Technology"},
+ {id:"aspen",name:"Summer Internships (incl. Aspen Digital)",org:"Aspen Institute",type:"internship",paths:["policy","comms"],loc:"DC · New York · Aspen, CO",paid:true,pay:"$18–$22/hr in DC",
+  status:"deadline",date:"2027-01-15",approx:true,statusText:"One short window expected in January 2027",fit:"Paid placements across policy and society programs, including Aspen Digital. A strong fit if you want to combine policy, writing, and public dialogue.",
+  kw:["tech policy","AI communications"],url:"https://www.extern.com/post/aspen-institute-internship-guide",title:"Summer Intern, Aspen Digital"},
+ {id:"cdt",name:"Summer Internships",org:"Center for Democracy & Technology (CDT)",type:"internship",paths:["policy","comms"],loc:"Washington, DC (partially remote)",paid:true,
+  status:"open",statusText:"Summer 2027 listings posted · interviews usually start in January",fit:"Paid summer internships on AI governance, privacy, and civil rights in tech. Undergraduates can apply to the Communications, Development, and State Engagement tracks.",
+  kw:["AI governance","privacy","tech policy"],url:"https://cdt.org",
+  extra:[["Past communications listing","https://app.qureos.com/jobs/2026-development-and-communications-summer-internship-1762431920588"]],title:"Communications Intern"},
+ {id:"cdtx",name:"Academic-Year Externship",org:"Center for Democracy & Technology (CDT)",type:"internship",paths:["policy"],loc:"Washington, DC (partially remote)",
+  status:"deadline",date:"2027-03-15",statusText:"Apply by Mar 15, 2027",fit:"Unpaid academic-year externships for credit, open to all majors. Ask whether it can count toward your HCAI 4600 capstone.",
+  kw:["tech policy","civil rights in tech"],url:"https://cdt.hire.trakstar.com/jobs/fk0zm99/",title:"Academic-Year Extern"},
+ {id:"fpf",name:"U.S. Policy Internships",org:"Future of Privacy Forum",type:"internship",paths:["policy"],loc:"Washington, DC (3 days in office)",
+  status:"watch",statusText:"Watch for the Summer 2027 posting",fit:"10-week summer program on AI, privacy, and data policy. Welcomes undergraduates from the second year on. You may get a short writing prompt.",
+  tip:"FPF asks applicants not to use AI in their application. Write this one yourself.",noAI:true,
+  kw:["data policy","privacy","Data Ethics"],url:"https://fpf.org/us-policy-internships/",title:"Policy Intern"},
+ {id:"caidp",name:"AI Policy Clinic",org:"Center for AI and Digital Policy (CAIDP)",type:"fellowship",paths:["policy"],loc:"Remote · free",remote:true,
+  status:"watch",statusText:"Opens each spring and fall (Fall 2026 window was Mar 15–Apr 15)",fit:"A semester-long AI policy training program, about 6 hours a week, open to undergraduates. You research national AI policies for the AI & Democratic Values Index and earn an AI policy certificate. A strong resume builder before an internship.",
+  kw:["AI policy","AI governance"],url:"https://www.caidp.org/global-academic-network/ai-policy-clinic/",title:"AI Policy Clinic participant"},
+ {id:"lumen",name:"AI Governance Summer Intern",org:"Lumen",type:"internship",paths:["corp"],loc:"Location not listed",paid:true,pay:"$31–$46/hr",
+  status:"watch",statusText:"Recent posting · check for the 2027 cycle",fit:"Evaluate AI systems for fairness and transparency, turn regulations into practical guidelines, and research laws like the EU AI Act. No specific major required; ethics, public policy, and law are listed.",
+  elig:"Rising seniors",kw:["AI Governance","Responsible AI","EU AI Act"],url:"https://www.tealhq.com/job/intern-title-ai-governance_049afc48-02b6-4a1b-8f4c-0b08d32685a5",flavor:"risk",title:"AI Governance Summer Intern"},
+ {id:"allianz",name:"AI Governance Internship",org:"Allianz",type:"internship",paths:["corp"],loc:"Minneapolis area (hybrid)",paid:true,pay:"$20–$24/hr",
+  status:"watch",statusText:"Past posting (Summer 2026) · watch for 2027",fit:"Focuses on communication best practices and project management while supporting the AI Governance team's risk framework.",
+  kw:["AI Governance","risk framework"],url:"https://www.tealhq.com/job/summer-2026-ai-governance-internship_7ea1a719bdf6fcb5a64fa32a1016deef8f035",flavor:"risk",title:"AI Governance Intern"},
+ {id:"ibm",name:"2027 Copywriter Intern",org:"IBM",type:"internship",paths:["comms"],loc:"New York, NY (hybrid) · May 24–Aug 13, 2027",paid:true,
+  status:"open",statusText:"Open now",fit:"Write headlines, scripts, blog posts, and articles that make IBM's technology understandable. No major required.",
+  elig:"Rising seniors · writing portfolio required",kw:["copywriter intern","AI communications"],url:"https://www.wayup.com/i-Technology-j-2027-Intern-Copywriter-IBM-268498640951392/",title:"2027 Intern - Copywriter"},
+ {id:"lenovo",name:"AI Product Content Intern",org:"Lenovo",type:"internship",paths:["comms"],loc:"Morrisville, NC",nc:true,
+  status:"watch",statusText:"Past posting (Summer 2026) · watch for 2027",fit:"Build a library of AI use cases and create storytelling content explaining AI products. Looks for communications, journalism, or storytelling plus a basic understanding of AI.",
+  kw:["AI communications","AI literacy"],url:"https://justjobs.com/career/15990565/Ai-Product-Content-Intern-Summer-2026-North-Carolina-Morrisville",title:"AI Product Content Intern"},
+ {id:"emerson",name:"Brand Strategy & AI Research Intern",org:"Emerson Collective",type:"internship",paths:["comms"],loc:"Los Angeles, CA",paid:true,pay:"$25/hr",
+  status:"watch",statusText:"Past posting (Summer 2026) · watch for 2027",fit:"Explore how AI can shape brand storytelling and creative strategy at a nonprofit. Asks for research and synthesis skills.",
+  elig:"Rising sophomores through seniors",kw:["AI communications","brand strategy"],url:"https://www.mediabistro.com/jobs/2922754344-brand-strategy-ai-research-intern-summer-paid",title:"Brand Strategy & AI Research Intern"},
+ {id:"ncdit",name:"Future Technologist Internship",org:"NC Department of Information Technology",type:"internship",paths:["public"],loc:"North Carolina (on-site or hybrid)",nc:true,paid:true,pay:"$20/hr",
+  status:"watch",statusText:"Spring/summer 2027 applications to be announced",fit:"Built for people without technology-related education. NCDIT leads the state's AI strategy and its Responsible Use of AI Framework, so interns see AI governance up close.",
+  kw:["Future Technologist","public interest technology"],url:"https://it.nc.gov/about/work-ncdit/internships",
+  extra:[["NC Responsible Use of AI Framework","https://it.nc.gov/resources/artificial-intelligence/ai-framework-responsible-use"]],flavor:"risk",title:"Future Technologist Intern"},
+ {id:"dataann",name:"Domain Expert (RLHF)",org:"DataAnnotation.tech",type:"remote",paths:["data"],loc:"Remote · flexible",remote:true,paid:true,
+  status:"ongoing",statusText:"Ongoing · contract work",fit:"Flexible remote contract work, not a traditional internship. Hires \"Domain Experts\" in the humanities and writing for Reinforcement Learning from Human Feedback.",
+  kw:["RLHF","Domain Expert"],url:"https://www.dataannotation.tech",flavor:"rlhf",title:"Domain Expert"},
+ {id:"imerit",name:"RLHF Contract Work",org:"iMerit",type:"remote",paths:["data"],loc:"Remote",remote:true,paid:true,
+  status:"ongoing",statusText:"Ongoing · contract work",fit:"Remote contract work grading, correcting and rewriting AI outputs to make them safer and more accurate.",
+  kw:["RLHF","AI training"],url:"https://imerit.net/careers",flavor:"rlhf",title:"AI Data Specialist"},
+ {id:"tjfg",name:"Tech Jobs for Good",org:"Job board · technology for social impact",type:"board",paths:["policy","public","comms"],loc:"Remote & nationwide",remote:true,
+  status:"ongoing",statusText:"Always on",fit:"One of the best places to find remote internships at AI think tanks, nonprofits and policy accelerators looking for human-centered tech students.",
+  kw:["Responsible AI","public interest technology"],url:"https://techjobsforgood.com"},
+ {id:"80k",name:"80,000 Hours Job Board",org:"Job board · AI safety & policy",type:"board",paths:["policy","corp"],loc:"Global · remote options",remote:true,
+  status:"ongoing",statusText:"Always on",fit:"A board for high-impact roles with a large AI Safety and Policy section. Filter by internships and entry-level roles at global AI governance organizations.",
+  kw:["AI Safety","AI governance"],url:"https://jobs.80000hours.org"},
+ {id:"atih",name:"Responsible Tech Job Board",org:"All Tech Is Human",type:"board",paths:["policy","corp","public","ux"],loc:"Remote & nationwide",remote:true,
+  status:"ongoing",statusText:"Always on",fit:"Curated roles in Responsible AI, Trust & Safety, public interest technology, and tech and democracy. ATIH also runs a free mentorship program and a university network.",
+  kw:["Trust and Safety","Responsible AI","tech and democracy"],url:"https://alltechishuman.org/responsible-tech-job-board"},
+ {id:"hire",name:"Hire-A-Niner",org:"UNC Charlotte University Career Center",type:"campus",paths:["policy","corp","comms","ux","data","public"],loc:"UNC Charlotte",nc:true,
+  status:"ongoing",statusText:"Upload your resume early",fit:"The Career Center's job board for internships, career fairs, and on-campus interviews. Your resume must be approved before you can apply (usually 1–2 business days). Book career coach appointments here too.",
+  kw:["internships","career fairs"],url:"https://career.charlotte.edu/jobs"},
+ {id:"upip",name:"University Professional Internship Program (UPIP)",org:"UNC Charlotte University Career Center",type:"campus",paths:["policy","corp","comms","ux","data","public"],loc:"UNC Charlotte",nc:true,paid:true,
+  status:"ongoing",statusText:"Each semester",fit:"Paid on-campus internships with faculty and staff mentors for sophomores, juniors, and seniors.",
+  kw:["on-campus internship"],url:"https://career.charlotte.edu/upip",title:"UPIP Intern"}
+];
+
+const KEYWORDS = [
+  ["Responsible AI","Fairness, transparency, accountability teams"],
+  ["AI Governance","Policies and oversight for AI systems"],
+  ["Model Risk","Bank and insurer model validation"],
+  ["Risk Analyst","Broad risk roles at financial firms"],
+  ["Data Ethics","Privacy and data use policy"],
+  ["Human-Computer Interaction","How people use technology"],
+  ["UX Research","Studying users to shape products"],
+  ["Trust and Safety","Content and platform integrity"],
+  ["AI policy intern","Think tanks, nonprofits, government"],
+  ["tech policy","Broader technology law and policy"],
+  ["AI literacy","Education and training roles"],
+  ["content policy","Rules for what platforms allow"],
+  ["AI communications","Explaining AI to the public"],
+  ["research assistant AI","Research support roles"],
+  ["public interest technology","Tech for government and civil society"],
+  ["RLHF","Evaluating and improving AI outputs"]
+];
+
+const SKILLS = {
+  literacy:{name:"AI literacy & tool fluency",li:["Artificial Intelligence (AI)","Generative AI"],say:"Evaluated and applied generative AI tools across academic and professional tasks, choosing the right tool and checking its limits.",build:"Take HCAI 1100, then keep a log of AI tools you've tested and where they failed."},
+  prompting:{name:"Prompt design & output evaluation",li:["Prompt Engineering","AI Output Evaluation"],say:"Designed and tested prompt structures (context-layering, chain-of-thought) to reduce hallucinations and produce accurate, usable outputs.",build:"Do paid RLHF work at DataAnnotation.tech or iMerit. It's this skill, on a resume."},
+  sociotech:{name:"Sociotechnical & labor-impact analysis",li:["Sociotechnical Analysis","Technology Impact Assessment"],say:"Analyzed how automated systems affect workers, users and communities, drawing on the history of computing and labor.",build:"Take HCAI 2100 or PHIL 3255, and write about one AI rollout's effect on workers."},
+  research:{name:"Qualitative research & synthesis",li:["Qualitative Research","Research Synthesis"],say:"Designed and ran interdisciplinary research using qualitative methods, then synthesized findings for decision-makers.",build:"Take IDST 3100, or join the CAIDP AI Policy Clinic to research national AI policies."},
+  ethics:{name:"Ethical reasoning & bias evaluation",li:["Responsible AI","AI Ethics","Data Ethics"],say:"Evaluated generative AI tools for algorithmic bias, privacy risk and ethical compliance using sociotechnical frameworks.",build:"Take PHIL 3224 (Data Ethics) or HCAI 3112, and audit one public AI tool for bias."},
+  policy:{name:"Policy & regulation analysis",li:["Policy Analysis","AI Governance","Regulatory Compliance"],say:"Reviewed AI regulations such as the EU AI Act and translated them into practical guidelines.",build:"Join the CAIDP AI Policy Clinic, or read NC's Responsible Use of AI Framework and write a one-page brief."},
+  writing:{name:"Clear writing & storytelling",li:["Technical Writing","Storytelling","Copywriting"],say:"Wrote clear, audience-specific explanations, briefs and stories about complex technology.",build:"Start a writing portfolio now (IBM's copywriter internship requires one). Three strong pieces is enough."},
+  userresearch:{name:"User & behavior research",li:["User Research","Human-Computer Interaction (HCI)"],say:"Used social science methods to study how people interact with AI systems and where they get stuck.",build:"Take ITIS 4360 (Human-Centered AI) or HCAI 3111, and run five short user interviews about an AI tool."},
+  translate:{name:"Explaining AI to non-technical people",li:["Stakeholder Communication","Cross-functional Collaboration"],say:"Bridged technical developers and non-technical stakeholders by explaining AI capabilities and limits in plain language.",build:"Present an AI explainer to a club or class, or volunteer to run an AI literacy workshop."},
+  pm:{name:"Project management & stakeholder work",li:["Project Management","Stakeholder Management"],say:"Led an applied project from scoping to delivery with outside partners.",build:"Use HCAI 4600 for a community-based or internship capstone, or apply to UPIP."},
+  ml:{name:"Machine learning basics",li:["Machine Learning"],say:"Built a working understanding of how machine learning models are trained and evaluated.",build:"Optional for most HCAI roles. ECGR 4105 (Intro to Machine Learning) counts toward the minor."}
+};
+
+const COURSES = [
+  {code:"HCAI 1100",t:"AI Fundamentals and Literacy for All",group:"major",tag:"Foundations",skills:["literacy","prompting","translate"]},
+  {code:"HCAI 2100",t:"Computing, Labor, and Power in History and Society",group:"major",tag:"Foundations",skills:["sociotech","ethics"]},
+  {code:"IDST 3100",t:"Interdisciplinary Research Methods",group:"major",tag:"Research methods",skills:["research","writing"]},
+  {code:"HCAI 2101",t:"AI Application and Impact Across Disciplines",group:"major",tag:"Interdisciplinary · also minor core",skills:["prompting","translate","literacy"]},
+  {code:"HCAI 3111",t:"Social Sciences Applied",group:"major",tag:"Interdisciplinary · ANTH, POLS, SOCY, PSYC",skills:["userresearch","policy","ethics"]},
+  {code:"HCAI 3112",t:"Humanities Applied",group:"major",tag:"Interdisciplinary · PHIL, ENGL, HIST, WRDS",skills:["ethics","writing","translate"]},
+  {code:"HCAI 4600",t:"Capstone",group:"major",tag:"Internship, service learning or project",skills:["pm","research","writing"]},
+  {code:"PHIL 3224",t:"Data Ethics",group:"minor",tag:"Elective",skills:["ethics","policy"]},
+  {code:"PHIL 3255",t:"Philosophy of AI",group:"minor",tag:"Elective",skills:["ethics","sociotech"]},
+  {code:"ITIS 4360",t:"Human-Centered AI",group:"minor",tag:"Elective",skills:["userresearch","literacy"]},
+  {code:"ECGR 4105",t:"Introduction to Machine Learning",group:"minor",tag:"Elective",skills:["ml"]}
+];
+
+const OUTCOMES = [
+  ["Critically engage with and apply AI technologies to analyze complex issues.","“I use AI tools to dig into messy problems, and I check what they get wrong.”"],
+  ["Demonstrate transferable thinking and analytical skills rooted in the humanities, earth, and social sciences.","“My training is in how people think and argue, which is what AI systems are trying to model.”"],
+  ["Demonstrate responsible AI literacy and evaluate the ethical application of algorithmic systems.","“I can look at an AI system and tell you who it might harm and what to do about it.”"],
+  ["Use interdisciplinary strategies to solve problems by integrating AI and humanistic methods.","“I bring research methods and AI workflows together on the same problem.”"]
+];
+
+const COMPETENCIES = {
+  resp:["Responsible AI & Risk Mitigation","Trained in sociotechnical frameworks to evaluate Generative AI tools for algorithmic bias, data privacy risks, and ethical compliance, ensuring models operate safely within corporate and regulatory guardrails."],
+  prompt:["Advanced Prompt Engineering & Optimization","Experienced in designing, refining, and testing prompt structures (such as context-layering and chain-of-thought) to reduce AI hallucinations and produce highly accurate, business-ready outputs."],
+  hci:["Human-Computer Interaction (HCI) Analysis","Skilled in assessing how automated systems impact labor systems, users, and society, allowing me to bridge the gap between technical developers and non-technical stakeholders."],
+  risk:["Regulatory & Ethical Alignment","Equipped to review AI implementation proposals against current data ethics policies, ensuring transparency and reducing legal or reputational risk in automated decision-making."],
+  rlhf:["Domain Expertise & Human Feedback","Strong foundation in qualitative research methods (IDST 3100) to evaluate AI outputs for accuracy, tone, and logical consistency, providing high-quality Reinforcement Learning from Human Feedback (RLHF)."],
+  ux:["Human-Centric Solution Design","Focused on the end-user experience, utilizing social science methodologies to evaluate how people interact with AI systems, ensuring new tools are intuitive, accessible, and solve real business problems."]
+};
+const FLAVOR_BULLETS = {general:["resp","prompt","hci"],risk:["risk","prompt","hci"],rlhf:["resp","rlhf","hci"],ux:["resp","prompt","ux"]};
+
+/* ===================== helpers ===================== */
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const store = {
+  get(k, d){ try{ const v = localStorage.getItem("hcai:"+k); return v == null ? d : JSON.parse(v); }catch{ return d; } },
+  set(k, v){ try{ localStorage.setItem("hcai:"+k, JSON.stringify(v)); }catch{} }
+};
+let toastT;
+function toast(msg){ const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("show"), 1800); }
+async function copyText(text, label){
+  try{ await navigator.clipboard.writeText(text); toast(label || "Copied"); }
+  catch{ toast("Couldn't copy automatically. Select the text and copy it."); }
+}
+const DAY = 864e5;
+function daysUntil(iso){ const d = new Date(iso + "T23:59:59"); return Math.ceil((d - TODAY) / DAY); }
+function fmtDate(iso){ return new Date(iso + "T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}); }
+function statusPill(o){
+  if (o.date){
+    const n = daysUntil(o.date);
+    if (n < 0) return `<span class="pill watch">Passed · check next cycle</span>`;
+    const cls = n <= 14 && !o.approx ? "urgent" : "deadline";
+    const lead = o.approx ? "≈ " : "";
+    return `<span class="pill ${cls}">${lead}${n === 0 ? "Due today" : n + (n === 1 ? " day" : " days") + " left"}</span>`;
+  }
+  return `<span class="pill ${o.status}">${o.status === "open" ? "Open now" : o.status === "watch" ? "Watch for 2027" : "Ongoing"}</span>`;
+}
+
+/* ===================== profile (shared) ===================== */
+const profile = Object.assign({name:"",phone:"",email:"",city:"",linkedin:""}, store.get("profile", {}));
+let courses = new Set(store.get("courses", ["HCAI 1100"]));
+let goal = store.get("goal", "corp");
+
+/* ===================== ROUTER ===================== */
+const VIEWS = ["home","find","letter","linkedin","pathways","resources"];
+function route(){
+  const h = location.hash.replace("#","");
+  const v = VIEWS.includes(h) ? h : "home";
+  VIEWS.forEach(x => $("#v-" + x).hidden = x !== v);
+  $$(".tabs a").forEach(a => { if (a.dataset.v === v) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
+  if (v === "linkedin") renderLinkedIn();
+  if (v === "letter") renderLetter();
+  window.scrollTo({top:0});
+}
+window.addEventListener("hashchange", route);
+function go(v){ if (location.hash === "#" + v) route(); else location.hash = v; }
+
+/* ===================== HOME ===================== */
+function renderHome(){
+  const hk = ["Responsible AI","AI Governance","Model Risk","Data Ethics","UX Research","Trust and Safety"];
+  $("#heroKeywords").innerHTML = hk.map(k => `<button type="button" data-k="${esc(k)}">${esc(k)}</button>`).join("");
+  $("#heroKeywords").onclick = e => { const b = e.target.closest("button"); if (b) searchFor(b.dataset.k); };
+  $("#heroSearch").onsubmit = e => { e.preventDefault(); searchFor($("#heroQ").value); };
+
+  const upcoming = OPPS.filter(o => o.date && daysUntil(o.date) >= 0).sort((a,b) => a.date.localeCompare(b.date));
+  const rolling = OPPS.filter(o => ["wells","boa","duke","ibm"].includes(o.id));
+  const rows = upcoming.map(o => {
+    const d = new Date(o.date + "T12:00:00");
+    return `<div class="tl-row">
+      <div class="tl-date">${d.toLocaleDateString("en-US",{month:"short"})}<b>${o.approx ? "~" : ""}${d.getDate()}</b></div>
+      <div class="tl-main"><h4>${esc(o.org.split(" · ")[0])}: ${esc(o.name)}</h4><p>${esc(o.statusText)}</p></div>
+      ${statusPill(o)}</div>`;
+  }).join("") + `<div class="tl-row">
+      <div class="tl-date">Now<b>●</b></div>
+      <div class="tl-main"><h4>Recruiting now: ${rolling.map(o => esc(o.org.split(" · ")[0])).join(", ")}</h4><p>Summer 2027 roles are posted. Charlotte employers fill early, so apply this month.</p></div>
+      <span class="pill open">Open now</span></div>`;
+  $("#timeline").innerHTML = rows;
+
+  $$(".step[data-filter]").forEach(a => a.addEventListener("click", () => { state.types = new Set(["board","remote"]); renderFilters(); renderCards(); }));
+}
+function searchFor(q){ state.q = q || ""; $("#q").value = state.q; resetFilters(false); renderCards(); go("find"); }
+
+/* ===================== FIND ===================== */
+const state = { q:"", paths:new Set(), types:new Set(), more:new Set(), mine:new Set(), sort:"deadline" };
+let saved = store.get("saved", {});
+const SAVE_CYCLE = [null,"saved","applying","applied"];
+const SAVE_LABEL = {null:"Save", saved:"Saved", applying:"Applying", applied:"Applied ✓"};
+
+function chipRow(el, entries, set){
+  el.innerHTML = entries.map(([k,l]) => `<button class="chip" type="button" data-k="${k}" aria-pressed="${set.has(k)}">${esc(l)}</button>`).join("");
+  el.onclick = e => { const b = e.target.closest(".chip"); if (!b) return; const k = b.dataset.k; set.has(k) ? set.delete(k) : set.add(k); b.setAttribute("aria-pressed", set.has(k)); renderCards(); };
+}
+function renderFilters(){
+  chipRow($("#fPath"), Object.entries(PATHS).map(([k,p]) => [k,p.short]), state.paths);
+  chipRow($("#fType"), Object.entries(TYPES), state.types);
+  chipRow($("#fMore"), [["soon","Deadline in 30 days"],["paid","Paid"],["nc","In North Carolina"],["remote","Remote-friendly"],["nocode","No coding needed"]], state.more);
+  chipRow($("#fMine"), [["saved","Saved"],["applying","Applying"],["applied","Applied"]], state.mine);
+}
+function resetFilters(render = true){
+  state.paths.clear(); state.types.clear(); state.more.clear(); state.mine.clear();
+  renderFilters(); if (render) renderCards();
+}
+function matches(o){
+  if (state.paths.size && !o.paths.some(p => state.paths.has(p))) return false;
+  if (state.types.size && !state.types.has(o.type)) return false;
+  if (state.more.has("soon") && !(o.date && daysUntil(o.date) >= 0 && daysUntil(o.date) <= 30)) return false;
+  if (state.more.has("paid") && !(o.paid || o.pay)) return false;
+  if (state.more.has("nc") && !o.nc) return false;
+  if (state.more.has("remote") && !(o.remote || /remote/i.test(o.loc))) return false;
+  if (state.mine.size && !state.mine.has(saved[o.id])) return false;
+  if (state.q.trim()){
+    const hay = [o.name,o.org,o.loc,o.fit,o.tip,o.elig,o.pay,o.statusText,TYPES[o.type],...o.kw,...o.paths.map(p => PATHS[p].label)].join(" ").toLowerCase();
+    const terms = state.q.toLowerCase().replace(/["“”]/g,"").split(/\s+/).filter(Boolean);
+    // all terms must hit; allow a phrase match too
+    if (!terms.every(t => hay.includes(t))) return false;
+  }
+  return true;
+}
+function sortVal(o){
+  if (o.date && daysUntil(o.date) >= 0) return 0 + daysUntil(o.date);
+  return {open:500, deadline:600, watch:700, ongoing:800}[o.status] ?? 900;
+}
+function renderCards(){
+  let list = OPPS.filter(matches);
+  if (state.sort === "az") list.sort((a,b) => a.org.localeCompare(b.org));
+  else if (state.sort === "pay") list.sort((a,b) => (!!(b.paid||b.pay)) - (!!(a.paid||a.pay)) || sortVal(a) - sortVal(b));
+  else list.sort((a,b) => sortVal(a) - sortVal(b));
+  $("#count").textContent = `${list.length} of ${OPPS.length} opportunities`;
+  if (!list.length){
+    $("#cards").innerHTML = `<div class="empty"><p><b>Nothing matches yet.</b></p><p class="small" style="margin-top:6px">Try a broader keyword like “AI governance” or clear a filter. Remember most postings won't say “Human-Centered AI.”</p><p style="margin-top:14px"><button class="btn" type="button" id="emptyClear">Clear search and filters</button></p></div>`;
+    $("#emptyClear").onclick = () => { state.q = ""; $("#q").value = ""; resetFilters(); };
+    return;
+  }
+  $("#cards").innerHTML = list.map(o => {
+    const s = saved[o.id] ?? null;
+    const canLetter = !["board"].includes(o.type) && o.id !== "hire";
+    return `<article class="card" data-id="${o.id}">
+      <div class="card-top">
+        <div style="min-width:0"><h3>${esc(o.name)}</h3><p class="org">${esc(o.org)}</p></div>
+        ${statusPill(o)}
+      </div>
+      <div class="meta">
+        <span>${esc(TYPES[o.type])}</span><span>${esc(o.loc)}</span>
+        ${o.pay ? `<span>${esc(o.pay)}</span>` : o.paid ? `<span>Paid</span>` : ""}
+        ${o.elig ? `<span>${esc(o.elig)}</span>` : ""}
+        <span>${esc(o.statusText)}</span>
+      </div>
+      <p class="fit">${esc(o.fit)}</p>
+      ${o.tip ? `<p class="tip"><b>${o.noAI ? "Write it yourself:" : "Tip:"}</b> ${esc(o.tip)}</p>` : ""}
+      <div class="kws"><span class="eyebrow">Search</span>${o.kw.map(k => `<button class="kw" type="button" data-copy="${esc(k)}" title="Copy keyword">${esc(k)}</button>`).join("")}</div>
+      <div class="card-actions">
+        <a class="btn ink" href="${esc(o.url)}" target="_blank" rel="noopener">Open site <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+        ${(o.extra||[]).map(([l,u]) => `<a class="btn ghost" href="${esc(u)}" target="_blank" rel="noopener">${esc(l)}</a>`).join("")}
+        ${canLetter ? `<button class="btn" type="button" data-letter="${o.id}">${o.noAI ? "Open letter checklist" : "Draft cover letter"}</button>` : ""}
+        <button class="btn save" type="button" data-save="${o.id}" data-s="${s ?? ""}">${SAVE_LABEL[s]}</button>
+      </div>
+    </article>`;
+  }).join("");
+}
+function initFind(){
+  renderFilters();
+  $("#q").addEventListener("input", e => { state.q = e.target.value; renderCards(); });
+  $("#sort").addEventListener("change", e => { state.sort = e.target.value; renderCards(); });
+  $("#clearFilters").onclick = () => resetFilters();
+  $("#toggleFilters").onclick = () => $("#filters").classList.toggle("open");
+  $("#cards").addEventListener("click", e => {
+    const sv = e.target.closest("[data-save]");
+    if (sv){
+      const id = sv.dataset.save; const cur = saved[id] ?? null;
+      const next = SAVE_CYCLE[(SAVE_CYCLE.indexOf(cur) + 1) % SAVE_CYCLE.length];
+      if (next) saved[id] = next; else delete saved[id];
+      store.set("saved", saved);
+      sv.dataset.s = next ?? ""; sv.textContent = SAVE_LABEL[next];
+      toast(next ? `Marked as ${SAVE_LABEL[next].replace(" ✓","").toLowerCase()}` : "Removed from your list");
+      if (state.mine.size) renderCards();
+      return;
+    }
+    const lt = e.target.closest("[data-letter]");
+    if (lt){ $("#lOpp").value = lt.dataset.letter; applyOpp(lt.dataset.letter); go("letter"); }
+  });
+  renderCards();
+}
+
+/* ===================== LETTER ===================== */
+const L = Object.assign({opp:"",title:"",company:"",manager:"",address:"",team:"",flavor:"general",initiative:"",industry:"",story:""}, store.get("letter", {}));
+const LMAP = {lOpp:"opp",lTitle:"title",lCompany:"company",lManager:"manager",lAddress:"address",lTeam:"team",lFlavor:"flavor",lInitiative:"initiative",lIndustry:"industry",lStory:"story"};
+const PMAP = {pName:"name",pPhone:"phone",pEmail:"email",pCity:"city",pLinkedin:"linkedin"};
+
+function applyOpp(id){
+  const o = OPPS.find(x => x.id === id);
+  L.opp = id;
+  if (o){
+    L.company = o.org.split(" · ")[0];
+    L.title = o.title || o.name;
+    L.flavor = o.flavor || "general";
+    if (o.remote) L.address = "Remote";
+    else if (o.loc && !/see posting|not listed/i.test(o.loc)) L.address = o.loc.split(" · ")[0];
+  }
+  for (const [elId,k] of Object.entries(LMAP)) $("#"+elId).value = L[k] ?? "";
+  store.set("letter", L);
+  renderLetter();
+}
+function ph(v, label){ return v && v.trim() ? v.trim() : `[${label}]`; }
+function buildLetter(){
+  const P = profile;
+  const today = TODAY.toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"});
+  const co = ph(L.company,"Company Name"), title = ph(L.title,"Exact Job Title");
+  const bullets = FLAVOR_BULLETS[L.flavor || "general"].map(k => COMPETENCIES[k]);
+  const lines = [
+    `**${ph(P.name,"Student Name")}**`,
+    `${ph(P.phone,"Phone Number")} | ${ph(P.email,"Email Address")} | ${ph(P.linkedin,"LinkedIn Profile URL")} | ${ph(P.city,"City, State Zip")}`,
+    ``, today, ``,
+    L.manager.trim() || "Hiring Committee", co, ph(L.address,"Company Address or Remote"), ``,
+    `**Re: Application for ${title}**`, ``,
+    `Dear ${L.manager.trim() || "Hiring Team"},`, ``,
+    `I am writing to express my strong interest in the ${title} position at ${co}.`, ``,
+    `As a student in the Human-Centered Artificial Intelligence (HCAI) program at the University of North Carolina at Charlotte, I am trained at the intersection of technical AI application and sociotechnical governance. ${co}'s commitment to ${ph(L.initiative,"a specific company initiative, value, or project")} aligns perfectly with my focus on deploying AI securely, ethically, and effectively within enterprise environments.`, ``,
+    `While many candidates approach AI purely from a software engineering perspective, my interdisciplinary training equips me to manage the human and ethical layers of technology. Through my coursework in AI literacy, computing history, and applied digital studies, I have developed the critical thinking required to audit AI outputs, mitigate bias, and ensure that AI workflows actually serve human end-users.`, ``,
+    `In this role, I will bring the following competencies to your team:`,
+    ...bullets.map(([h,b]) => `•  **${h}:** ${b}`), ``,
+    `What excites me most about ${co} is your work in ${ph(L.industry,"a specific detail about the company's industry")}. I am eager to apply my HCAI background to help your team leverage AI not just as a novelty, but as a reliable, governed, and human-centric asset.`, ``,
+    `Thank you for your time and consideration. I would welcome the opportunity to discuss how my unique blend of humanities-based critical thinking and applied AI strategies can support the goals of the ${ph(L.team,"Name of specific team or department")} team this summer.`, ``,
+    `Sincerely,`, ``,
+    ph(P.name,"Student Name"), ph(P.linkedin,"Link to LinkedIn Profile, Portfolio, or GitHub")
+  ];
+  return lines.join("\n");
+}
+function renderLetter(){
+  const raw = buildLetter();
+  $("#letterOut").innerHTML = esc(raw).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").replace(/\[([^\]]+)\]/g,'<mark>[$1]</mark>');
+  const o = OPPS.find(x => x.id === L.opp);
+  const noAI = !!(o && o.noAI);
+  $("#fpfWarn").hidden = !noAI;
+  $("#letterAIgo").disabled = noAI || !aiReady;
+  const left = (raw.match(/\[[^\]]+\]/g) || []).length;
+  const checks = [
+    [left === 0, left === 0 ? "Every bracket is replaced" : `${left} bracket${left === 1 ? "" : "s"} left to fill (highlighted)`],
+    [!!L.title.trim(), "Job title matches the posting exactly"],
+    [L.initiative.trim().length > 15 && L.industry.trim().length > 15, "Company details are specific to this employer"],
+    [!!L.manager.trim(), "Addressed to a real person, if you can find one"],
+    [L.flavor !== "general", "Competencies tailored to the role's flavor"]
+  ];
+  $("#letterChecks").innerHTML = checks.map(([ok,t]) => `<li><span class="tick ${ok ? "on" : ""}" aria-hidden="true">${ok ? "✓" : ""}</span><span>${esc(t)}</span><span class="sr-only" style="position:absolute;left:-9999px">${ok ? "done" : "to do"}</span></li>`).join("")
+    + `<li><span class="tick" aria-hidden="true"></span><span>Get it reviewed: book a career coach through <a href="https://career.charlotte.edu/jobs" target="_blank" rel="noopener">Hire-A-Niner</a>.</span></li>`;
+}
+function initLetter(){
+  const sel = $("#lOpp");
+  sel.innerHTML += OPPS.filter(o => o.type !== "board" && o.id !== "hire").map(o => `<option value="${o.id}">${esc(o.org.split(" · ")[0])}: ${esc(o.name)}</option>`).join("");
+  for (const [elId,k] of Object.entries(LMAP)) $("#"+elId).value = L[k] ?? "";
+  for (const [elId,k] of Object.entries(PMAP)) $("#"+elId).value = profile[k] ?? "";
+  sel.addEventListener("change", e => applyOpp(e.target.value));
+  for (const [elId,k] of Object.entries(LMAP)) if (elId !== "lOpp") $("#"+elId).addEventListener("input", e => { L[k] = e.target.value; store.set("letter", L); renderLetter(); });
+  for (const [elId,k] of Object.entries(PMAP)) $("#"+elId).addEventListener("input", e => { profile[k] = e.target.value; store.set("profile", profile); renderLetter(); });
+  $("#copyLetter").onclick = () => copyText(buildLetter().replace(/\*\*/g,""), "Letter copied");
+  $("#letterAIgo").onclick = () => runAI("letter", () => {
+    const o = OPPS.find(x => x.id === L.opp);
+    return `You are helping a university student polish an internship cover letter. They are in the Human-Centered AI (HCAI) program at UNC Charlotte, which pairs AI literacy with ethics, humanities and social science methods.
+
+Here is their draft, built from the program's template:
+---
+${buildLetter().replace(/\*\*/g,"")}
+---
+Role: ${L.title || "(not given)"} at ${L.company || "(not given)"}. Role flavor: ${({general:"general HCAI",risk:"risk, governance or compliance",rlhf:"data analytics or AI training/RLHF",ux:"UX/UI or product"})[L.flavor]}.
+${o ? "What we know about the opportunity: " + o.fit : ""}
+The student's own story to work in: ${L.story.trim() || "(none given; do not invent one)"}
+
+Rewrite the letter so it:
+- Merges the three competency bullets into ONE coherent paragraph tailored to this role, as the program's guide recommends.
+- Works in the student's story naturally if one was given. Never invent experience, employers, numbers or courses.
+- Sounds like a real, confident student: plain and warm, not stiff or salesy. Cut filler like "I am writing to express" if a stronger opener fits.
+- Keeps the contact header, date, greeting and sign-off. Keeps anything still in [square brackets] as-is so the student can fill it.
+- Stays under 380 words.
+Reply with only the letter text, no preamble or notes, no markdown.`;
+  });
+  $("#letterAIcopy").onclick = () => copyText($("#letterAIout").value, "Draft copied");
+}
+
+/* ===================== LINKEDIN ===================== */
+const LI = Object.assign({year:"", program:"major", field:"", path:"corp", project:""}, store.get("li", {}));
+function gradYears(){ const y = TODAY.getFullYear(); const out=[]; for (let i=0;i<=4;i++){ out.push(`May ${y+i}`); out.push(`Dec ${y+i}`);} return out.filter(s => !/Dec 2026/.test(s) || TODAY.getMonth() < 11); }
+function skillsFromCourses(){
+  const map = new Map();
+  COURSES.filter(c => courses.has(c.code)).forEach(c => c.skills.forEach(s => { if (!map.has(s)) map.set(s, []); map.get(s).push(c.code); }));
+  return map;
+}
+function buildLI(){
+  const p = PATHS[LI.path] || PATHS.corp;
+  const field = LI.field.trim();
+  const yy = (LI.year.match(/\d{4}/) || [""])[0].slice(2);
+  const progLine = LI.program === "minor" ? "AI Fundamentals minor" : "Human-Centered AI";
+  const have = skillsFromCourses();
+  const kw = p.keywords.slice(0,2);
+  const headlines = [
+    `${progLine} student at UNC Charlotte | ${p.headline}${field ? " | " + field : ""}`,
+    `Making AI work for people | ${field ? field + " + " : ""}HCAI @ UNC Charlotte${yy ? " '" + yy : ""} | ${kw.join(" · ")}`,
+    `Aspiring ${p.role} | Interdisciplinary Studies${LI.program === "major" ? " (Human-Centered AI)" : ""}, UNC Charlotte | Seeking Summer 2027 internships`
+  ];
+  const skillNames = [...have.keys()].map(k => SKILLS[k].name.toLowerCase());
+  const topSkills = skillNames.slice(0,3);
+  const about = [
+    `I'm a ${LI.program === "minor" ? "UNC Charlotte student minoring in AI Fundamentals" : "Human-Centered AI student at UNC Charlotte"}${field ? `, pairing it with ${field}` : ""}. My program starts from a simple idea: AI needs a human touch. I study how AI tools work, where they go wrong, and who they affect.`,
+    topSkills.length ? `So far I've built skills in ${topSkills.length > 1 ? topSkills.slice(0,-1).join(", ") + " and " + topSkills.slice(-1) : topSkills[0]}. I'm comfortable explaining AI to people who don't work with it, and pushing back when a system isn't serving its users.` : `I'm building skills in AI literacy, ethical evaluation, research and clear writing, and I'm comfortable explaining AI to people who don't work with it.`,
+    LI.project.trim() ? `Recently: ${LI.project.trim().replace(/\.?$/,".")}` : `[Add one project or experience here: what you did, what you found, and why it mattered.]`,
+    `I'm looking for ${LI.year ? "Summer 2027 " : ""}internships in ${p.label.toLowerCase()}. If your team is working on ${kw.map(k => k.toLowerCase()).join(" or ")}, I'd love to connect.`
+  ].join("\n\n");
+  const liSkills = [];
+  [...have.keys()].forEach(k => SKILLS[k].li.forEach(s => liSkills.includes(s) || liSkills.push(s)));
+  p.skills.forEach(k => SKILLS[k].li.slice(0,1).forEach(s => liSkills.includes(s) || liSkills.push(s)));
+  const taken = COURSES.filter(c => courses.has(c.code));
+  const edu = `University of North Carolina at Charlotte
+${LI.program === "minor" ? "Minor in Artificial Intelligence Fundamentals" : "Bachelor of Arts, Interdisciplinary Studies · Concentration in Human-Centered AI"}${field ? `\n${LI.program === "minor" ? "Major" : "Disciplinary field"}: ${field}` : ""}
+${LI.year ? "Expected " + LI.year : "[Expected graduation]"}
+
+Relevant coursework: ${taken.length ? taken.map(c => `${c.t} (${c.code})`).join("; ") : "[tick courses on the skills map]"}`;
+  const featured = [
+    LI.path === "comms" ? "Two or three writing samples that explain an AI idea to a general reader. IBM's copywriter role asks for a portfolio." : "A one-page brief or short essay from an HCAI course, posted as a document.",
+    LI.path === "data" ? "A short write-up of how you evaluate AI outputs (with no confidential client data if you've done RLHF work)." : "A before-and-after audit of an AI tool: what you tested, what failed, what you'd change.",
+    courses.has("HCAI 4600") ? "Your HCAI 4600 capstone deliverable, with a sentence on the partner and the result." : "Your HCAI 4600 capstone, once you start it. Pick an internship or community project you can show.",
+    LI.path === "policy" || LI.path === "public" ? "Your CAIDP AI Policy Clinic certificate, if you complete it." : "Any certificate or workshop on responsible AI you've completed."
+  ];
+  return {headlines, about, liSkills, edu, featured};
+}
+function renderLinkedIn(){
+  const r = buildLI();
+  $("#liHeadlines").innerHTML = r.headlines.map((h,i) => `<div class="opt"><p>${esc(h)}</p><div style="display:grid;gap:6px;justify-items:end"><span class="cc ${h.length > 220 ? "over" : ""}">${h.length}/220</span><button class="iconbtn" type="button" data-copy="${esc(h)}">Copy</button></div></div>`).join("");
+  $("#liAbout").innerHTML = esc(r.about).replace(/\[([^\]]+)\]/g,'<mark>[$1]</mark>');
+  $("#liSkills").innerHTML = r.liSkills.map(s => `<span>${esc(s)}</span>`).join("");
+  $("#liEdu").innerHTML = esc(r.edu).replace(/\[([^\]]+)\]/g,'<mark>[$1]</mark>');
+  $("#liFeatured").innerHTML = r.featured.map(f => `<li>${esc(f)}</li>`).join("");
+  $("#liCourses").innerHTML = COURSES.filter(c => courses.has(c.code)).map(c => `<span>${esc(c.code)}</span>`).join("") || `<span class="muted">None yet</span>`;
+}
+function initLinkedIn(){
+  $("#liYear").innerHTML = `<option value="">Choose…</option>` + gradYears().map(y => `<option>${y}</option>`).join("");
+  $("#liPath").innerHTML = Object.entries(PATHS).map(([k,p]) => `<option value="${k}">${esc(p.label)}</option>`).join("");
+  const m = {liYear:"year",liProgram:"program",liField:"field",liPath:"path",liProject:"project"};
+  for (const [id,k] of Object.entries(m)){ $("#"+id).value = LI[k] ?? ""; $("#"+id).addEventListener("input", e => { LI[k] = e.target.value; store.set("li", LI); renderLinkedIn(); }); }
+  $("#copyAbout").onclick = () => copyText(buildLI().about, "About section copied");
+  $("#copySkills").onclick = () => copyText(buildLI().liSkills.join(", "), "Skills copied");
+  $("#copyEdu").onclick = () => copyText(buildLI().edu, "Education entry copied");
+  $("#liAIgo").onclick = () => runAI("li", () => {
+    const p = PATHS[LI.path];
+    const taken = COURSES.filter(c => courses.has(c.code)).map(c => `${c.code} ${c.t}`).join("; ") || "none listed";
+    return `Help a university student write their LinkedIn headline and About section.
+
+Facts (use only these; never invent jobs, awards, numbers or courses):
+- Program: ${LI.program === "minor" ? "Minor in AI Fundamentals" : "B.A. Interdisciplinary Studies with a Human-Centered AI (HCAI) concentration"} at UNC Charlotte. HCAI pairs AI literacy with ethics, critical thinking, and humanities and social science methods. Motto: "AI needs a human touch."
+- Other field or major: ${LI.field || "not given"}
+- Expected graduation: ${LI.year || "not given"}
+- Courses taken: ${taken}
+- Career direction: ${p.label}. Recruiters in this area search for: ${p.keywords.join(", ")}.
+- A project they're proud of: ${LI.project || "not given (leave a [bracket] for them to fill)"}
+
+Write:
+HEADLINE: one option, under 200 characters, that a recruiter searching those keywords would find.
+ABOUT: 120–200 words, first person, plain and conversational, like a real student talking. Short paragraphs. Open with something specific, not "I am a passionate...". End with what they're looking for.
+
+Reply in exactly that format: a line starting "HEADLINE:" then a blank line, then "ABOUT:" and the text. No markdown.`;
+  });
+  $("#liAIcopy").onclick = () => copyText($("#liAIout").value, "Draft copied");
+}
+
+/* ===================== PATHWAYS ===================== */
+function renderCourses(){
+  const row = c => `<button class="course" type="button" data-c="${esc(c.code)}" aria-pressed="${courses.has(c.code)}">
+    <span class="code">${esc(c.code)}</span><span style="min-width:0"><span class="t">${esc(c.t)}</span><br><span class="s">${esc(c.tag)}</span></span>
+    <span class="box" aria-hidden="true">${courses.has(c.code) ? "✓" : ""}</span></button>`;
+  $("#coursesMajor").innerHTML = COURSES.filter(c => c.group === "major").map(row).join("");
+  $("#coursesMinor").innerHTML = COURSES.filter(c => c.group === "minor").map(row).join("");
+}
+function renderGoals(){
+  $("#goals").innerHTML = Object.entries(PATHS).map(([k,p]) => `<button class="goal" type="button" data-g="${k}" aria-pressed="${goal === k}"><b>${esc(p.label)}</b><span>${esc(p.blurb)}</span></button>`).join("");
+}
+function renderPathway(){
+  const p = PATHS[goal];
+  const have = skillsFromCourses();
+  const need = p.skills;
+  const got = need.filter(s => have.has(s));
+  const opps = OPPS.filter(o => o.paths.includes(goal) && !["campus"].includes(o.type)).sort((a,b) => sortVal(a) - sortVal(b)).slice(0,5);
+  const extra = [...have.keys()].filter(s => !need.includes(s));
+  $("#pwResult").innerHTML = `
+    <div class="panel-head"><div><p class="eyebrow">${esc(p.label)}</p><h3 style="font-size:24px;margin-top:4px">${got.length} of ${need.length} core skills underway</h3></div>
+      <a class="btn small" href="#find" data-path="${goal}">See all ${esc(p.short.toLowerCase())} roles</a></div>
+    <div class="meter" aria-hidden="true">${need.map(s => `<i class="${have.has(s) ? "on" : ""}"></i>`).join("")}</div>
+    <div>
+      ${need.map(s => {
+        const sk = SKILLS[s]; const via = have.get(s);
+        return `<div class="skillrow"><span class="st ${via ? "have" : "gap"}" aria-label="${via ? "building" : "to build"}">${via ? "✓" : "+"}</span>
+          <div style="min-width:0"><h4>${esc(sk.name)}</h4>
+          ${via ? `<p class="via">via ${via.map(esc).join(", ")}</p><p class="say"><b style="color:var(--ink)">Resume line:</b> ${esc(sk.say)}</p>`
+                : `<p class="build"><b>Next move:</b> ${esc(sk.build)}</p>`}
+          </div></div>`;
+      }).join("")}
+    </div>
+    ${extra.length ? `<p class="small muted"><b style="color:var(--ink)">Also in your toolkit:</b> ${extra.map(s => esc(SKILLS[s].name.toLowerCase())).join(", ")}.</p>` : ""}
+    <div style="display:grid;gap:8px"><p class="eyebrow">Search with</p><div class="kws">${p.keywords.map(k => `<button class="kw" type="button" data-search="${esc(k)}">${esc(k)}</button>`).join("")}</div></div>
+    <div style="display:grid;gap:8px"><p class="eyebrow">Who's hiring for this</p><div class="mini-opps">
+      ${opps.map(o => `<a href="${esc(o.url)}" target="_blank" rel="noopener"><b style="font-weight:500">${esc(o.org.split(" · ")[0])}: ${esc(o.name)}</b><span>${esc(o.date && daysUntil(o.date) >= 0 ? (o.approx ? "≈ " : "") + fmtDate(o.date) : o.status === "open" ? "Open now" : o.status === "watch" ? "Watch" : "Ongoing")}</span></a>`).join("")}
+    </div></div>`;
+}
+function initPathways(){
+  renderCourses(); renderGoals(); renderPathway();
+  $("#outcomes").innerHTML = OUTCOMES.map(([o,s]) => `<li><span>${esc(o)}<em>${esc(s)}</em></span></li>`).join("");
+  const onCourse = e => {
+    const b = e.target.closest(".course"); if (!b) return;
+    const c = b.dataset.c; courses.has(c) ? courses.delete(c) : courses.add(c);
+    store.set("courses", [...courses]); renderCourses(); renderPathway();
+  };
+  $("#coursesMajor").onclick = onCourse; $("#coursesMinor").onclick = onCourse;
+  $("#goals").onclick = e => { const b = e.target.closest(".goal"); if (!b) return; goal = b.dataset.g; store.set("goal", goal); LI.path = goal; store.set("li", LI); $("#liPath").value = goal; renderGoals(); renderPathway(); };
+  $("#pwResult").addEventListener("click", e => {
+    const s = e.target.closest("[data-search]"); if (s){ searchFor(s.dataset.search); return; }
+    const p = e.target.closest("[data-path]"); if (p){ e.preventDefault(); state.q=""; $("#q").value=""; resetFilters(false); state.paths.add(p.dataset.path); renderFilters(); renderCards(); go("find"); }
+  });
+  $("#pwGoal").value = store.get("pwGoal", "");
+  $("#pwGoal").addEventListener("input", e => store.set("pwGoal", e.target.value));
+  $("#pwAIgo").onclick = () => runAI("pw", () => {
+    const p = PATHS[goal]; const have = skillsFromCourses();
+    const taken = COURSES.filter(c => courses.has(c.code)).map(c => `${c.code} ${c.t}`).join("; ") || "none yet";
+    const gaps = p.skills.filter(s => !have.has(s)).map(s => SKILLS[s].name).join(", ") || "none";
+    const opps = OPPS.filter(o => o.paths.includes(goal)).map(o => `${o.org.split(" · ")[0]} – ${o.name} (${o.statusText})`).join("; ");
+    return `A student in UNC Charlotte's Human-Centered AI (HCAI) program wants a practical plan connecting their coursework to their post-graduation goal.
+
+Their goal in their words: ${$("#pwGoal").value.trim() || "(not given; use the career direction)"}
+Career direction: ${p.label}
+Courses taken or in progress: ${taken}
+Skills they still need for this direction: ${gaps}
+Remaining HCAI courses available: ${COURSES.filter(c => !courses.has(c.code)).map(c => c.code + " " + c.t).join("; ")}
+Note: HCAI 4600 Capstone can be an internship, service learning, community-based project or interdisciplinary project.
+Opportunities from their program's resource guide that fit: ${opps}
+Campus help: Hire-A-Niner (resume approval takes 1–2 business days), UPIP paid on-campus internships, career coaches.
+
+Write a short, concrete plan in plain, friendly language:
+1. "This semester": 2–3 specific actions.
+2. "Next 6 months": 2–3 actions, naming real opportunities above with their timing.
+3. "Before graduation": 2–3 actions, including how to use the capstone.
+4. "How to explain your HCAI degree in one sentence" for this goal.
+Only recommend courses and opportunities listed above. Keep it under 300 words. Plain text with those four headings, short lines starting with "- ".`;
+  });
+}
+
+/* ===================== RESOURCES ===================== */
+function resCard(o){ return `<a class="res" href="${esc(o.url)}" target="_blank" rel="noopener"><span class="host">${esc(new URL(o.url).host.replace(/^www\./,""))}</span><h4>${esc(o.name)}</h4><p>${esc(o.fit)}</p></a>`; }
+function initResources(){
+  $("#kwboard").innerHTML = KEYWORDS.map(([k,d]) => `<button type="button" data-search="${esc(k)}"><b>"${esc(k)}"</b><span>${esc(d)}</span></button>`).join("");
+  $("#kwboard").onclick = e => { const b = e.target.closest("[data-search]"); if (b) searchFor(b.dataset.search); };
+  $("#boards").innerHTML = OPPS.filter(o => o.type === "board" || o.type === "remote").map(resCard).join("");
+  $("#campus").innerHTML = OPPS.filter(o => o.type === "campus").map(resCard).join("") +
+    `<div class="res"><span class="host">via Hire-A-Niner</span><h4>Career coaches</h4><p>Book an appointment through Hire-A-Niner for resume and cover letter reviews. Bring your draft from the cover letter studio.</p></div>`;
+  const prog = [
+    {name:"Human-Centered AI program",url:"https://interdisciplinarystudies.charlotte.edu/human-centered-ai/",fit:"Curriculum, learning outcomes, faculty, and how to declare the major or the AI Fundamentals minor."},
+    {name:"B.A. in Interdisciplinary Studies",url:"https://interdisciplinarystudies.charlotte.edu/academics/ba-interdisciplinary-studies/",fit:"The degree the HCAI concentration sits in: 18 HCAI credits plus 18 in a disciplinary field."},
+    {name:"Nexus research network",url:"https://interdisciplinarystudies.charlotte.edu/research/nexus/",fit:"Interdisciplinary research connections. A route to research experience you can put on a resume."},
+    {name:"Interdisciplinary Studies events",url:"https://interdisciplinarystudies.charlotte.edu/news-events/",fit:"Talks and events where you can meet faculty and people working in the field."},
+    {name:"NC Responsible Use of AI Framework",url:"https://it.nc.gov/resources/artificial-intelligence/ai-framework-responsible-use",fit:"North Carolina's own AI governance framework. Good reading before a public-sector or governance interview."},
+    {name:"HCAI program Q&A assistant",url:"https://gemini.google.com/gem/1LVHCHsPUufVl-gA3lmQkriEGQ0k4ltym?usp=sharing",fit:"The program's custom assistant for questions about HCAI courses and requirements."}
+  ];
+  $("#program").innerHTML = prog.map(resCard).join("");
+}
+
+/* ===================== CLAUDE (sample) ===================== */
+let sampler = null, aiReady = false;
+const ctls = {};
+const AI_ERR = {
+  rate_limited:"Claude is busy right now. Wait a minute and try again.",
+  session_expired:"Your Claude session expired. Sign in again, then retry.",
+  refused:"Claude couldn't help with that draft. Try changing the wording.",
+  empty_completion:"Claude didn't return anything. Try again with a bit more detail.",
+  prompt_too_large:"That's too much text. Shorten your story or project and retry.",
+  upstream_error:"The connection dropped. Try again."
+};
+function setAIAvailable(on){
+  aiReady = on;
+  [["letter"],["li"],["pw"]].forEach(([k]) => {
+    $("#"+k+"AIgo").hidden = !on;
+    $("#"+k+"AIoff").hidden = on;
+  });
+  renderLetter();
+}
+async function runAI(key, buildPrompt){
+  const go = $("#"+key+"AIgo"), out = $("#"+key+"AIout"), st = $("#"+key+"AIstatus"), cp = $("#"+key+"AIcopy");
+  if (ctls[key]){ ctls[key].abort(); return; }
+  if (!sampler) return;
+  const ctl = new AbortController(); ctls[key] = ctl;
+  const label = go.textContent;
+  go.textContent = "Stop"; go.classList.remove("primary");
+  st.hidden = false; st.innerHTML = `<span class="dot-pulse"></span> Thinking…`;
+  out.hidden = true; if (cp) cp.hidden = true;
+  try{
+    const res = await sampler(buildPrompt(), { signal: ctl.signal, cache:false, onText: ({text}) => { out.hidden = false; out.value = text; st.textContent = "Writing…"; } });
+    out.hidden = false; out.value = res.text;
+    st.textContent = res.truncated ? "This got cut short. Shorten your inputs and try again." : "Done. Edit it here, then copy it.";
+    if (cp) cp.hidden = false;
+  }catch(e){
+    if (e && e.text){ out.hidden = false; out.value = e.text; if (cp) cp.hidden = false; }
+    if (e && e.code === "cancelled") st.textContent = "Stopped.";
+    else if (e && ["not_granted","sampling_disabled","not_declared","capability_disabled","capability_removed"].includes(e.code)){ st.hidden = true; setAIAvailable(false); toast("Claude isn't available on this page."); }
+    else { if (e && e.code === "refused"){ out.value = ""; out.hidden = true; } st.textContent = AI_ERR[e && e.code] || AI_ERR.upstream_error; }
+  }finally{
+    delete ctls[key];
+    go.textContent = label; go.classList.add("primary");
+  }
+}
+
+/* ===================== global copy delegation ===================== */
+document.addEventListener("click", e => {
+  const c = e.target.closest("[data-copy]");
+  if (c){ copyText(c.dataset.copy, `Copied “${c.dataset.copy.length > 40 ? c.dataset.copy.slice(0,40) + "…" : c.dataset.copy}”`); }
+});
+
+/* ===================== boot ===================== */
+renderHome(); initFind(); initLetter(); initLinkedIn(); initPathways(); initResources();
+setAIAvailable(false);
+$$("[id$=AIoff]").forEach(el => el.hidden = true); // don't show "off" note until we know
+$$("[id$=AIgo]").forEach(el => el.hidden = true);
+route();
+(async () => {
+  try{ sampler = window.claude && window.claude.use ? await window.claude.use("sample") : null; }catch{ sampler = null; }
+  setAIAvailable(!!sampler);
+})();
+})();
+</script>
+
+</body></html>
